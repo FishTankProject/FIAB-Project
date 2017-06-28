@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{A90E6ACA-6E99-47CE-B889-373F1E9AB53F}"
+	ProjectSection(SolutionItems) = preProject
+		..\kiwizen.code DSED\DSED-06\DATA\DSED6_FISH.mdf = ..\kiwizen.code DSED\DSED-06\DATA\DSED6_FISH.mdf
+		..\kiwizen.code DSED\DSED-06\DATA\DSED6_FISH_log.ldf = ..\kiwizen.code DSED\DSED-06\DATA\DSED6_FISH_log.ldf
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{703654DD-BB36-4DE5-8388-D823FADE2978}"
 EndProject
