@@ -1,0 +1,28 @@
+﻿@model DSED06_Aquatic_Pet_Store.Models.PET_GROUP
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Pet Group Details</h2>
+
+<div>
+    <!--  <h4>AQUATIC_GROUP</h4>  -->
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @*  @Html.DisplayNameFor(model => model.NAME)  *@
+            Name :
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NAME)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit Pet Group", "Edit", new { id = Model.ID_PK }) |
+    @Html.ActionLink("Back to Pet Group Maintenance Page", "Index")
+</p>
