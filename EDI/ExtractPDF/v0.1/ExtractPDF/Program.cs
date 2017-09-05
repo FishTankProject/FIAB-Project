@@ -30,12 +30,13 @@ namespace ExtractPDF
 
             using (PdfReader reader = new PdfReader(file + "\\PDF\\p30.pdf"))
             {
+                int count = 0;
                 for (int i = 0; i < reader.NumberOfPages; i++)
                 {
                     //Console.WriteLine($"{i}\t{ PdfTextExtractor.GetTextFromPage(reader, i + 1)}");
                     string page = PdfTextExtractor.GetTextFromPage(reader, i + 1, Strategy);
                     string[] lines = page.Split('\n');
-                    int count = 0;
+                    
                     foreach (string line in lines)
                     {
                         /* List of text to be ignored during extraction */
