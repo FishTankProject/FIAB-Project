@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ExtractPDF.Shared", "ExtractPDF.Shared\ExtractPDF.Shared.shproj", "{AD859CBB-398C-45DF-8869-E861B10EE9C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtractPDF.Console", "ExtractPDF.Console\ExtractPDF.Console.csproj", "{B6621497-7334-4AA1-AD7D-F57EEA81EE0D}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		ExtractPDF.Shared\ExtractPDF.Shared.projitems*{ad859cbb-398c-45df-8869-e861b10ee9c8}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B6621497-7334-4AA1-AD7D-F57EEA81EE0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6621497-7334-4AA1-AD7D-F57EEA81EE0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6621497-7334-4AA1-AD7D-F57EEA81EE0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6621497-7334-4AA1-AD7D-F57EEA81EE0D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3620DFC2-6620-48C4-A89C-896726049258}
+	EndGlobalSection
+EndGlobal
