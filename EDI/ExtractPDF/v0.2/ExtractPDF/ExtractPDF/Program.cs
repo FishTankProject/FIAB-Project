@@ -42,10 +42,9 @@ namespace ExtractPDF
 
             string app_name = System.Reflection.Assembly.GetEntryAssembly().GetName().Name;
 
-
             int index = full_path.LastIndexOf(app_name);
 
-            // return the Application path
+            // return just the application path without the application name
             return full_path.Substring(0, index);
         }
 
@@ -55,9 +54,51 @@ namespace ExtractPDF
             /************************************************** 
                https://stackoverflow.com/questions/15748800/extract-text-by-line-from-pdf-using-itextsharp-c-sharp 
              *************************************************/
+
+            ITextExtractionStrategy Strategy = new iTextSharp.text.pdf.parser.LocationTextExtractionStrategy();
+
             using (PdfReader reader = new PdfReader(pdf_file))
             {
+                int page_count = 0;
+                int line_count ;
+
+                while ( page_count < reader.NumberOfPages )
+                {
+                    page_count++;
+                    // get the whole page content
+                    string page = PdfTextExtractor.GetTextFromPage(reader, page_count, Strategy);
+                    ProcessPage(page);
+                    
+                    
+                }
+                // Debug
+                Console.WriteLine($"Total number of pages have been processed is {page_count}");
+
+                /**/
+                void ProcessPage(string page)
+                {
+                    // Split the page into lines
+                    string[] lines = page.Split('\n');
+
+                    line_count = 0;
+                    ProcessLine(lines);
+
+                    // Debug
+                    Console.WriteLine($"Page {page_count} been precessed.");
+                }
+
+                /* */
+                void ProcessLine(string [] lines)
+                {
+                    foreach(string line in lines)
+                    {
+                        /* List of text to be ignored during extraction */
+                        if (line.Trim() == string.Empty)
+                            Console.WriteLine($"{++line_count}\t Empty Line ===> to be ignored");
+                    }
+                }
             }
-        }
+
+        } 
     }
 }
