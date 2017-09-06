@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B6621497-7334-4AA1-AD7D-F57EEA81EE0D}</ProjectGuid>
+    <ProjectGuid>{26BB281E-D060-4E71-B7E0-C84E89038C49}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ExtractPDF.Console</RootNamespace>
-    <AssemblyName>ExtractPDF.Console</AssemblyName>
+    <RootNamespace>ExtractPDF</RootNamespace>
+    <AssemblyName>ExtractPDF</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="itextsharp">
+      <HintPath>.\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,5 +53,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <Import Project="..\ExtractPDF.Shared\ExtractPDF.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

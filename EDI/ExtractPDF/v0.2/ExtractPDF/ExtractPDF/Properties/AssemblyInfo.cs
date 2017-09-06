@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ExtractPDF.Console")]
+[assembly: AssemblyTitle("ExtractPDF")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ExtractPDF.Console")]
+[assembly: AssemblyProduct("ExtractPDF")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("b6621497-7334-4aa1-ad7d-f57eea81ee0d")]
+[assembly: Guid("26bb281e-d060-4e71-b7e0-c84e89038c49")]
 
 // Version information for an assembly consists of the following four values:
 //

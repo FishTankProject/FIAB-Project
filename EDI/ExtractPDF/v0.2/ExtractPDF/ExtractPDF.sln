@@ -3,28 +3,29 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ExtractPDF.Shared", "ExtractPDF.Shared\ExtractPDF.Shared.shproj", "{AD859CBB-398C-45DF-8869-E861B10EE9C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtractPDF", "ExtractPDF\ExtractPDF.csproj", "{26BB281E-D060-4E71-B7E0-C84E89038C49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtractPDF.Console", "ExtractPDF.Console\ExtractPDF.Console.csproj", "{B6621497-7334-4AA1-AD7D-F57EEA81EE0D}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ExtractPDF.Shared", "ExtractPDF.Shared\ExtractPDF.Shared.shproj", "{DA665B7E-8221-41F6-B07C-5B4032124C74}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		ExtractPDF.Shared\ExtractPDF.Shared.projitems*{ad859cbb-398c-45df-8869-e861b10ee9c8}*SharedItemsImports = 13
+		ExtractPDF.Shared\ExtractPDF.Shared.projitems*{26bb281e-d060-4e71-b7e0-c84e89038c49}*SharedItemsImports = 4
+		ExtractPDF.Shared\ExtractPDF.Shared.projitems*{da665b7e-8221-41f6-b07c-5b4032124c74}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B6621497-7334-4AA1-AD7D-F57EEA81EE0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B6621497-7334-4AA1-AD7D-F57EEA81EE0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B6621497-7334-4AA1-AD7D-F57EEA81EE0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B6621497-7334-4AA1-AD7D-F57EEA81EE0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26BB281E-D060-4E71-B7E0-C84E89038C49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26BB281E-D060-4E71-B7E0-C84E89038C49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26BB281E-D060-4E71-B7E0-C84E89038C49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26BB281E-D060-4E71-B7E0-C84E89038C49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {3620DFC2-6620-48C4-A89C-896726049258}
+		SolutionGuid = {0ABC732F-60E2-4E43-86F6-A061134B02B7}
 	EndGlobalSection
 EndGlobal
