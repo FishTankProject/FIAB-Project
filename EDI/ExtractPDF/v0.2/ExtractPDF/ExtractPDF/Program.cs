@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-/**************************************************************************************** 
+/***************************************************************************************** 
  How the read PDF file from C#
  http://www.c-sharpcorner.com/blogs/reading-contents-from-pdf-word-text-files-in-c-sharp1 
- ****************************************************************************************/
+
+ using iTextSharp
+ ******************************************************************************************/
 
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
@@ -18,12 +20,17 @@ namespace ExtractPDF
     {
         static void Main(string[] args)
         {
+            /*
+             * Console.Write() - display extended ascii chars?
+             * https://stackoverflow.com/questions/3948089/console-write-display-extended-ascii-chars
+             */
+            Console.OutputEncoding = Encoding.UTF8;
+
             string app_location = GetAppPath();
             // Console.WriteLine(app_location); // Debug
 
+            // current pdf file name
             string pdf_file = "\\PDF\\MPI_Approved_Species_20170413.pdf";
-
-            
 
             ReadPDF(app_location + pdf_file);
 
@@ -31,10 +38,19 @@ namespace ExtractPDF
             Console.ReadKey();
         }
 
+
+        /// <summary>
+        /// Return the application path 
+        /// </summary>
+        /// <returns></returns>
         private static string GetAppPath()
         {
-            /* https://stackoverflow.com/questions/837488/how-can-i-get-the-applications-path-in-a-net-console-application  */
-            //return System.Reflection.Assembly.GetExecutingAssembly().Location;
+            /*
+              https://stackoverflow.com/questions/837488/how-can-i-get-the-applications-path-in-a-net-console-application  
+
+              return System.Reflection.Assembly.GetExecutingAssembly().Location;
+
+              */
 
             // modify the code to work for both .NET Core & .NET Framework
 
@@ -48,12 +64,16 @@ namespace ExtractPDF
             return full_path.Substring(0, index);
         }
 
-
+        /// <summary>
+        /// function to read and process pdf file 
+        /// </summary>
+        /// <param name="pdf_file">name of the pdf file to be processed</param>
         private static void ReadPDF(string pdf_file)
         {
-            /************************************************** 
-               https://stackoverflow.com/questions/15748800/extract-text-by-line-from-pdf-using-itextsharp-c-sharp 
-             *************************************************/
+            /*
+              How to extract text line by line when using iTextSharp 
+              https://stackoverflow.com/questions/15748800/extract-text-by-line-from-pdf-using-itextsharp-c-sharp 
+             */
 
             ITextExtractionStrategy Strategy = new iTextSharp.text.pdf.parser.LocationTextExtractionStrategy();
 
@@ -62,48 +82,116 @@ namespace ExtractPDF
                 int page_count = 0;
                 int line_count ;
 
+                // break the whole pdf into pages and then process page by page 
                 while ( page_count < reader.NumberOfPages )
                 {
                     page_count++;
                     // get the whole page content
-                    string page = PdfTextExtractor.GetTextFromPage(reader, page_count, Strategy);
-                    ProcessPage(page);
+                    string page_content = PdfTextExtractor.GetTextFromPage(reader, page_count, Strategy);
 
-                    // Debug
+                    // Debug : check the last page
+                    //string page_content = PdfTextExtractor.GetTextFromPage(reader, reader.NumberOfPages, Strategy);
+
+                    // process a page
+                    ProcessPage(page_content);
+
+                    // Debug : do 1 page testing
                     break;
                 }
                 // Debug
                 Console.WriteLine($"Total number of pages have been processed is {page_count}");
 
-                /**/
-                void ProcessPage(string page)
+                /// <summary>
+                /// function to read and process pdf file 
+                /// </summary>
+                /// <param name="page_content">name of the pdf file to be processed</param>
+                void ProcessPage(string page_content)
                 {
-                    // Split the page into lines
-                    string[] lines = page.Split('\n');
+                    // Split the page content into individual line
+                    string[] lines_content = page_content.Split('\n');
 
                     line_count = 0;
-                    ProcessLine(lines);
+                    // Process line by line
+                    foreach (string line in lines_content)
+                    {
+
+                        // Only process line if line contains text,
+                        //if (line.Trim() == string.Empty)
+                        //    Console.WriteLine($"[{(++line_count).ToString().PadLeft(3, '0')}]");
+
+
+                        StringBuilder builder = new StringBuilder();
+                        if (line.Trim() != string.Empty)
+                        {
+                            // break the line into text with a space as delimitor
+                            string[] texts = line.Split(' ');
+                            
+                            // iterate through each text
+                            string term = string.Empty;
+                            foreach (string text in texts)
+                            {
+
+                                // ignore all blank/empty text
+
+                                if (text.Trim() != string.Empty)
+                                {
+
+                                    if (char.IsUpper(text[0]))
+                                    {
+                                        //if (term != string.Empty)
+                                        builder.Append(term + "|");
+                                        term = text;
+                                    }
+                                    else
+                                        term += " " + text;
+
+                                }
+                                else if (text == " ")
+                                    term += text;
+
+                            }
+                            if( term != string.Empty)
+                                builder.Append(term + "|");
+
+
+                            //Console.WriteLine($"{++line_count}\t{line}");
+                        }
+
+
+
+                        //Console.WriteLine($"[{(++line_count).ToString().PadLeft(3, '0')}]{builder}");
+
+                        /*
+                         * Now we have group words into 'terms'
+                         */
+                        // split into 'terms'
+                        Console.Write($"[{(++line_count).ToString().PadLeft(3, '0')}]");
+                        string[] terms = builder.ToString().Split('|');
+
+                        foreach(string term in terms)
+                        {
+                            if( term.Trim() != string.Empty)
+                            {
+                                Console.Write(term + ",");
+                                //Console.Write(FormatText(term) + ",");
+                            }
+                        }
+                        Console.Write("\n");
+
+
+                        // Debug  : stop after line 7
+                        //if (line_count == 7) break;
+
+                    }
 
                     // Debug
                     Console.WriteLine($"Page {page_count} been precessed.");
                 }
 
-                /* */
-                void ProcessLine(string [] lines)
-                {
-                    foreach(string line in lines)
-                    {
-                        /* List of text to be ignored during extraction */
-                        if (line.Trim() == string.Empty)
-                            Console.WriteLine($"{++line_count}\tEmpty Line ===> to be ignored");
-                        else
-                        {
-                            Console.WriteLine($"{++line_count}\t{line}");
-                        }
-                    }
-                }
+                
             }
 
-        } 
+        }
+
     }
 }
