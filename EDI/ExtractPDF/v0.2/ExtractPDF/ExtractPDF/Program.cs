@@ -47,9 +47,7 @@ namespace ExtractPDF
         {
             /*
               https://stackoverflow.com/questions/837488/how-can-i-get-the-applications-path-in-a-net-console-application  
-
               return System.Reflection.Assembly.GetExecutingAssembly().Location;
-
               */
 
             // modify the code to work for both .NET Core & .NET Framework
@@ -77,6 +75,8 @@ namespace ExtractPDF
 
             ITextExtractionStrategy Strategy = new iTextSharp.text.pdf.parser.LocationTextExtractionStrategy();
 
+            
+
             using (PdfReader reader = new PdfReader(pdf_file))
             {
                 int page_count = 0;
@@ -86,6 +86,7 @@ namespace ExtractPDF
                 while ( page_count < reader.NumberOfPages )
                 {
                     page_count++;
+
                     // get the whole page content
                     string page_content = PdfTextExtractor.GetTextFromPage(reader, page_count, Strategy);
 
@@ -95,8 +96,8 @@ namespace ExtractPDF
                     // process a page
                     ProcessPage(page_content);
 
-                    // Debug : do 1 page testing
-                    break;
+                    // Debug : do first 2 pages testing
+                    if (page_count==3) break;
                 }
                 // Debug
                 Console.WriteLine($"Total number of pages have been processed is {page_count}");
@@ -111,6 +112,7 @@ namespace ExtractPDF
                     string[] lines_content = page_content.Split('\n');
 
                     line_count = 0;
+                    bool start_flag = false;
                     // Process line by line
                     foreach (string line in lines_content)
                     {
@@ -119,13 +121,12 @@ namespace ExtractPDF
                         //if (line.Trim() == string.Empty)
                         //    Console.WriteLine($"[{(++line_count).ToString().PadLeft(3, '0')}]");
 
-
                         StringBuilder builder = new StringBuilder();
                         if (line.Trim() != string.Empty)
                         {
                             // break the line into text with a space as delimitor
                             string[] texts = line.Split(' ');
-                            
+
                             // iterate through each text
                             string term = string.Empty;
                             foreach (string text in texts)
@@ -150,30 +151,74 @@ namespace ExtractPDF
                                     term += text;
 
                             }
-                            if( term != string.Empty)
+                            if (term != string.Empty)
                                 builder.Append(term + "|");
 
 
                             //Console.WriteLine($"{++line_count}\t{line}");
                         }
 
-
-
                         //Console.WriteLine($"[{(++line_count).ToString().PadLeft(3, '0')}]{builder}");
+
+
+
 
                         /*
                          * Now we have group words into 'terms'
                          */
                         // split into 'terms'
                         Console.Write($"[{(++line_count).ToString().PadLeft(3, '0')}]");
-                        string[] terms = builder.ToString().Split('|');
 
-                        foreach(string term in terms)
+                        /* Check for end of the page before process any 'terms */
+
+                        if (builder.ToString().Contains("Page"))
                         {
+                            Console.Write("\n");
+                            if (builder.ToString().Contains("Page")) continue;
+                        }
+                        string[] terms = builder.ToString().Split('|');
+                        int term_count = 0;
+
+                        
+                        foreach (string term in terms)
+                        {
+                            
                             if( term.Trim() != string.Empty)
                             {
-                                Console.Write(term + ",");
+                                term_count++;
+                                //if (term_count == 1) { }
+                                
+                                if (CheckSpecialWords(term))
+                                {
+                                    //Console.Write("==>");
+                                    start_flag = true;
+                                }
+
+                                //if (CheckEndOfPage(term))
+                                //{
+                                //    start_flag = false;
+                                //}
+                                
+                                if(start_flag)
+                                    Console.Write(term + ",");
                                 //Console.Write(FormatText(term) + ",");
+
+                                bool CheckSpecialWords(string word)
+                                {
+                                    string[] special_words = {"Valid scientific name" }; // { "Marine", "Freshwater", "Valid scientific name" };
+                                    bool flag = false;
+                                    foreach(string text in special_words)
+                                    {
+                                        if(word.Contains(text))
+                                        {
+                                            return true;
+                                        }
+                                    }
+                                    return flag;
+                                }
+
+
+
                             }
                         }
                         Console.Write("\n");
