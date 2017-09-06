@@ -68,8 +68,9 @@ namespace ExtractPDF
                     // get the whole page content
                     string page = PdfTextExtractor.GetTextFromPage(reader, page_count, Strategy);
                     ProcessPage(page);
-                    
-                    
+
+                    // Debug
+                    break;
                 }
                 // Debug
                 Console.WriteLine($"Total number of pages have been processed is {page_count}");
@@ -94,7 +95,11 @@ namespace ExtractPDF
                     {
                         /* List of text to be ignored during extraction */
                         if (line.Trim() == string.Empty)
-                            Console.WriteLine($"{++line_count}\t Empty Line ===> to be ignored");
+                            Console.WriteLine($"{++line_count}\tEmpty Line ===> to be ignored");
+                        else
+                        {
+                            Console.WriteLine($"{++line_count}\t{line}");
+                        }
                     }
                 }
             }
