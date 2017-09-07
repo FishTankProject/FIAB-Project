@@ -87,7 +87,6 @@ namespace ExtractPDF
                 {
                     page_count++;
 
-                    // get the whole page content
                     string page_content = PdfTextExtractor.GetTextFromPage(reader, page_count, Strategy);
 
                     // Debug : check the last page
