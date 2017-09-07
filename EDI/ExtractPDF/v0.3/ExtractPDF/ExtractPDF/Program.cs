@@ -81,24 +81,32 @@ namespace ExtractPDF
              https://stackoverflow.com/questions/83152/reading-pdf-documents-in-net 
              Change to following Code :
              */
-            ITextExtractionStrategy Strategy = new iTextSharp.text.pdf.parser.SimpleTextExtractionStrategy();
+            
 
             using (PdfReader reader = new PdfReader(pdf_file))
             {
                 PageReaderHelper page_reader = new PageReaderHelper();
+
 
                 // break the whole pdf into pages and then process page by page 
                 string page_content;
                 for (int page_count = 0; page_count < reader.NumberOfPages;)
                 {
                     page_count++;
+
+                    /* Why are GetTextFromPage from iTextSharp returning longer and longer strings?
+                       https://stackoverflow.com/questions/35911062/why-are-gettextfrompage-from-itextsharp-returning-longer-and-longer-strings 
+                       */
+                    //ITextExtractionStrategy Strategy = new iTextSharp.text.pdf.parser.SimpleTextExtractionStrategy();
+                    ITextExtractionStrategy Strategy = new iTextSharp.text.pdf.parser.LocationTextExtractionStrategy();
+
                     // get the whole page content
                     page_content = PdfTextExtractor.GetTextFromPage(reader, page_count, Strategy);
 
                     page_reader.ProcessPage(page_content);
 
                     // Debug : do first 2 pages testing
-                    if (page_count == 2) break;
+                    //if (page_count == 2) break;
                 }
             }
         }
@@ -123,17 +131,14 @@ namespace ExtractPDF
             string[] lines_content = page_content.Split('\n');
 
             line_count = 0;
-            bool start_flag = false;
+            bool start_flag = true;
 
             // Process line by line
             foreach (string line in lines_content)
             {
                 Console.Write($"[{(++line_count).ToString().PadLeft(3, '0')}]");
 
-                if(CheckSpecialWords(line))
-                {
-                    start_flag = true;
-                }
+                start_flag = CheckIgnoredList(line);
 
                 if (start_flag)
                     Console.Write(line);
@@ -145,16 +150,16 @@ namespace ExtractPDF
             Console.WriteLine($"Page {page_count} been precessed.");
         }
 
-        bool CheckSpecialWords(string line)
+        bool CheckIgnoredList(string line)
         {
-            string[] _list = { "Marine Invertebrates" };
+            string[] _ignored_list = { "Import Health Standard", "2017", "Schedule", "Page", "KEY", "CITES" };
             string[] special_words = { "Valid scientific name" }; // { "Marine", "Freshwater", "Valid scientific name" };
-            bool flag = false;
-            foreach (string text in _list)
+            bool flag = true;
+            foreach (string text in _ignored_list)
             {
-                if (line.Trim() == text)
+                if (line.Contains(text))
                 {
-                    return true;
+                    return false;
                 }
             }
             return flag;
