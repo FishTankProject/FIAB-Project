@@ -216,7 +216,7 @@ namespace ExtractPDF
             }
             page_count++;
             // Debug
-            Console.WriteLine($"Page {page_count} been precessed.");
+            //Console.WriteLine($"Page {page_count} been precessed.");
         }
 
         /* 
