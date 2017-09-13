@@ -1,4 +1,6 @@
-﻿namespace ExtractPDF.Shared
+﻿using System;
+
+namespace ExtractPDF.Lib
 {
     public static class AppPathHelper
     {

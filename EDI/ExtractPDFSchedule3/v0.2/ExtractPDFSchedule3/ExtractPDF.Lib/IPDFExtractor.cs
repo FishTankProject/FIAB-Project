@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExtractPDF.Shared
+namespace ExtractPDF.Lib
 {
-    public interface PDFExtractorInterface
+    public interface IPDFExtractor
     {
         void ProcessPage(string page_content);
     }

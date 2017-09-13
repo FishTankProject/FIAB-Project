@@ -11,7 +11,7 @@ using System.Text;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
 
-namespace ExtractPDF.NETLib
+namespace ExtractPDF.Lib
 {
     public class ReadPDFHelper
     {
@@ -19,7 +19,7 @@ namespace ExtractPDF.NETLib
         /// function to read and process pdf file 
         /// </summary>
         /// <param name="pdf_file">name of the pdf file to be processed</param>
-        public static void ReadPDF(string pdf_file, BasePDFExtrator pdf_extractor)
+        public static void ReadPDF(string pdf_file, BasePDFExtractor pdf_extractor)
         {
             /*
             * Console.Write() - display extended ascii chars?

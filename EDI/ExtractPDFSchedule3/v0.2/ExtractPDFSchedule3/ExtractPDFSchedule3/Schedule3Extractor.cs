@@ -1,25 +1,27 @@
-﻿using System;
+﻿using ExtractPDF.Lib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ExtractPDFHelperNameSpace;
 
 
-namespace ExtractPDFHelperNameSpace
+
+namespace ExtractPDFSchedule3
 {
-    public class Schedule3Extractor : BasePDFExtractor, PDFExtractorInterface
+    public class Schedule3Extractor : BasePDFExtractor
     {
-        public void ProcessPage(string page_content)
+
+        public override void ProcessPage(string page_content)
         {
             // Split the page content into individual line
             string[] lines_content = page_content.Split('\n');
 
             /* Add new word into ignored_words */
             int size = ignored_words.Length;
-            Array.Resize(ref ignored_words, size+2);
+            Array.Resize(ref ignored_words, size + 2);
             ignored_words[size] = "Schedule 3";
-            ignored_words[size+1] = "Part 2";
+            ignored_words[size + 1] = "Part 2";
 
             int line_count = 0;
             bool ignore_word_found;
@@ -34,14 +36,14 @@ namespace ExtractPDFHelperNameSpace
                 {
                     string[] texts = line.Split(' ');
                     Console.Write($"{line}");
-                    
+
                 }
                 Console.WriteLine("");
             }
             page_count++;
             // Debug
             Console.WriteLine($"Page {page_count} been precessed.");
-            
+
         }
     }
 }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExtractPDF.NETLib
+namespace ExtractPDF.Lib
 {
-    public abstract class BasePDFExtractor 
+    public abstract class BasePDFExtractor : IPDFExtractor
     {
         protected int page_count = 0;
 
@@ -27,5 +27,7 @@ namespace ExtractPDF.NETLib
                     return true;
             return flag;
         }
+
+        public abstract void ProcessPage(string page_content);
     }
 }
