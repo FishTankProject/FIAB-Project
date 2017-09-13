@@ -27,7 +27,6 @@ namespace ExtractPDF.Lib
             */
             Console.OutputEncoding = Encoding.UTF8;
 
-
             /*
                 How to extract text line by line when using iTextSharp 
                 https://stackoverflow.com/questions/15748800/extract-text-by-line-from-pdf-using-itextsharp-c-sharp 
@@ -64,8 +63,8 @@ namespace ExtractPDF.Lib
 
                     pdf_extractor.ProcessPage(page_content);
 
-                    // Debug : do first 3 pages testing
-                    if (page_count == 1) break;
+                    // Debug : 
+                    //if (page_count == 1) break;
                 }
             }
         }
