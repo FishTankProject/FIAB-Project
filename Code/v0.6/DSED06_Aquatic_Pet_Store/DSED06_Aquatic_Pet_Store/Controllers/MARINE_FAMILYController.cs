@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using DSED06_Aquatic_Pet_Store.Models;
 
-namespace DSED06_Aquatic_Pet_Store
+namespace DSED06_Aquatic_Pet_Store.Controllers
 {
     public class MARINE_FAMILYController : Controller
     {
