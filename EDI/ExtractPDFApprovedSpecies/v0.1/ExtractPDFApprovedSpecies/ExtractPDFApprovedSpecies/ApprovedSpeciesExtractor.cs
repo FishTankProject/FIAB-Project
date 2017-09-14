@@ -11,6 +11,7 @@ namespace ExtractPDFApprovedSpecies
     public class ApprovedSpeciesExtractor : BasePDFExtractor
     {
         int line_count = 0;
+        string marine_type_name = string.Empty;
 
         public override void ProcessPage(string page_content)
         {
@@ -21,7 +22,7 @@ namespace ExtractPDFApprovedSpecies
             int size = ignored_words.Length;
             Array.Resize(ref ignored_words, size + 1);
             ignored_words[size] = "Schedule";
-            //ignored_words[size+1] = "Import Health Standard";
+            //ignored_words[size+1] = "Marine";
 
             string[] field_name = { "Valid scientific name", "Common name" };
             string[] marine_type = { "Freshwater ornamental fish",
@@ -30,33 +31,48 @@ namespace ExtractPDFApprovedSpecies
             string[] invertebrates_type = { "Hard corals", "Anenomes", "Clams",
                                             "Soft Corals","Invertebrates" };
 
+            //string marine_type_name = string.Empty;
+            string invertebrates_type_name = string.Empty;
             foreach (string line in lines_content)
             {
                 if(line.Trim() != string.Empty)
                 {
                     
                     /* 1) Check for ignore word*/
-                    if(CheckForWord(line, ignored_words))
+                    if(CheckForWord(line, ignored_words)
+                        || line.Trim() == "Marine Invertebrates")
                     {
                         continue;
                     }
                     /* 2) Check for field name*/
                     else if (CheckForWord(line, field_name))
                     {
-                        Console.WriteLine("\t{Field Name} " + line);
-                        line_count = 0;
+                        //Console.WriteLine("\t{Field Name} " + line);
+                        //line_count = 0;
                     }
                     /* 3) Check for marine type */
                     else if (CheckForWord(line, marine_type))
                     {
-                        Console.WriteLine("\t{Marine Type} " + line);
+                        marine_type_name = line.Trim();
+                        //Console.WriteLine("\t{Marine Type} " + line);
+                        if (marine_type_name != "Marine invertebrates")
+                        {
+                            Console.WriteLine("\n" + "".PadRight(6, ' ') + marine_type_name);
+                            //Console.ReadKey();
+                        }
+
                         line_count = 0;
 
                     }
                     /* 4) Check for invertebrates type when marine type is "Marine invertebrates" */
                     else if (CheckForWord(line, invertebrates_type))
                     {
-                        Console.WriteLine("\t{Invertebrates Type} " + line);
+                        invertebrates_type_name = line.Trim();
+                        Console.Write("\n");
+                        Console.WriteLine("".PadRight(6, ' ') + marine_type_name);
+                        //Console.WriteLine("\t{Invertebrates Type} " + line);
+                        Console.WriteLine("".PadRight(6, ' ') + invertebrates_type_name);
+                        //Console.ReadKey();
                         line_count = 0;
                     }
                     /* 5) then we process individual words in the line */
@@ -106,7 +122,8 @@ namespace ExtractPDFApprovedSpecies
                         {
                             //Console.Write(field_name[1] + "{");
                             //Console.Write("\t\t{");
-                            Console.Write(line.Substring(sub_index).Trim() );
+                            string common_name = line.Substring(sub_index).Trim();
+                            Console.Write(common_name);
                         }
 
                         
