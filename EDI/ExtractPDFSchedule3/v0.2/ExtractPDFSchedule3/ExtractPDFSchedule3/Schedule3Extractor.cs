@@ -9,6 +9,7 @@ namespace ExtractPDFSchedule3
 {
     public class Schedule3Extractor : BasePDFExtractor
     {
+        int family_count = 0;
 
         public override void ProcessPage(string page_content)
         {
@@ -22,6 +23,7 @@ namespace ExtractPDFSchedule3
             ignored_words[size + 1] = "Part 2";
 
             int line_count = 0;
+            
             bool ignore_word_found;
             foreach (string line in lines_content)
             {
@@ -33,6 +35,7 @@ namespace ExtractPDFSchedule3
                  * Check for whether is freshwater fish or marine fish or marine invertebrates
                  */
                 string[] fish_type = { "freshwater fish", "marine fish", "marine invertebrates" };
+                string page_header = "HAZARDS REQUIRING MITIGATION";
                 if (CheckForWord(line, fish_type))
                 {
                     int index=0;
@@ -43,11 +46,18 @@ namespace ExtractPDFSchedule3
                             break;
                         }
 
-                    Console.Write("==> Type of fish ==>" + line.Substring(index).Trim() + " \n");
+                    Console.Write("\t\t\t[" + line.Substring(index).Trim() + "] \n");
+                }
+                else if( line.Contains(page_header))
+                {
+                    //Console.Write("==> Header ==>" + line.Trim() + " \n");
                 }
                 else if (ignore_word_found != true && line.Trim() != String.Empty)
                 {
                     string[] texts = line.Split(' ');
+
+                    if (texts[0] != string.Empty)
+                        family_count = 0;
 
                     /*
                      * ignore when a line contains less than 3 words
@@ -56,12 +66,8 @@ namespace ExtractPDFSchedule3
                      */
                     if (texts.Length > 2 )
                     {
-                        Console.Write($"[{(++line_count).ToString().PadLeft(3, '0')}]");
-
-
-
-
-
+                        //Console.Write($"[{(++line_count).ToString().PadLeft(3, '0')}]");
+                        Console.Write($"[{(++family_count).ToString().PadLeft(3, '0')}]");
 
                         for (int i = 0; i < texts.Length; i++)
                         {

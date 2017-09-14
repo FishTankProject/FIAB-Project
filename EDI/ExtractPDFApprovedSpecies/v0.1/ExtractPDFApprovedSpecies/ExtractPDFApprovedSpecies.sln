@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.15
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtractPDFApprovedSpecies", "ExtractPDFApprovedSpecies\ExtractPDFApprovedSpecies.csproj", "{48E466EF-55AF-4CAB-9945-38152F3A742C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtractPDF.Lib", "ExtractPDF.Lib\ExtractPDF.Lib.csproj", "{35D9649F-0E5C-440A-BAE0-D03EDCA91342}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{48E466EF-55AF-4CAB-9945-38152F3A742C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48E466EF-55AF-4CAB-9945-38152F3A742C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48E466EF-55AF-4CAB-9945-38152F3A742C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48E466EF-55AF-4CAB-9945-38152F3A742C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35D9649F-0E5C-440A-BAE0-D03EDCA91342}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35D9649F-0E5C-440A-BAE0-D03EDCA91342}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35D9649F-0E5C-440A-BAE0-D03EDCA91342}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35D9649F-0E5C-440A-BAE0-D03EDCA91342}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1F8D9341-BD79-48CE-A1FC-51C7B6D1570D}
+	EndGlobalSection
+EndGlobal
