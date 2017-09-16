@@ -28,6 +28,21 @@ namespace ExtractPDF.Lib
             return flag;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
+        public string GetSelectedWord(string line, string[] word_list)
+        {
+            //bool flag = false;
+            foreach (string text in word_list)
+                if (line.Contains(text))
+                    return text;
+            return string.Empty;
+        }
+
         public abstract void ProcessPage(string page_content);
     }
 }

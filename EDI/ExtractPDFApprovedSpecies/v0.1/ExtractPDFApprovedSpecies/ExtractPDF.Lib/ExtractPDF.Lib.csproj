@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="AppPathHelper.cs" />
     <Compile Include="BasePDFExtractor.cs" />
+    <Compile Include="DAO\ConnectionHelper.cs" />
+    <Compile Include="DAO\DAOHelper.cs" />
     <Compile Include="IPDFExtractor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadPDFHelper.cs" />

@@ -3,15 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 using ExtractPDF.Lib;
+using ExtractPDF.Lib.DAO;
 
 namespace ExtractPDFApprovedSpecies
 {
+
+
+
+
     public class ApprovedSpeciesExtractor : BasePDFExtractor
     {
         int line_count = 0;
         string marine_type_name = string.Empty;
+        int marine_class_id = -1;
 
         public override void ProcessPage(string page_content)
         {
@@ -33,6 +40,8 @@ namespace ExtractPDFApprovedSpecies
 
             //string marine_type_name = string.Empty;
             string invertebrates_type_name = string.Empty;
+
+
             foreach (string line in lines_content)
             {
                 if(line.Trim() != string.Empty)
@@ -47,8 +56,10 @@ namespace ExtractPDFApprovedSpecies
                     /* 2) Check for field name*/
                     else if (CheckForWord(line, field_name))
                     {
+                        
                         //Console.WriteLine("\t{Field Name} " + line);
                         //line_count = 0;
+                        continue;
                     }
                     /* 3) Check for marine type */
                     else if (CheckForWord(line, marine_type))
@@ -58,8 +69,11 @@ namespace ExtractPDFApprovedSpecies
                         if (marine_type_name != "Marine invertebrates")
                         {
                             Console.WriteLine("\n" + "".PadRight(6, ' ') + marine_type_name);
+                            marine_class_id = ProcessMarineClassData(marine_type_name);
                             //Console.ReadKey();
                         }
+                        //else
+                        //    marine_class_id = -1;
 
                         line_count = 0;
 
@@ -68,8 +82,11 @@ namespace ExtractPDFApprovedSpecies
                     else if (CheckForWord(line, invertebrates_type))
                     {
                         invertebrates_type_name = line.Trim();
+
+                        marine_class_id = ProcessMarineClassData(invertebrates_type_name);
+
                         Console.Write("\n");
-                        Console.WriteLine("".PadRight(6, ' ') + marine_type_name);
+                        //Console.WriteLine("".PadRight(6, ' ') + marine_type_name);
                         //Console.WriteLine("\t{Invertebrates Type} " + line);
                         Console.WriteLine("".PadRight(6, ' ') + invertebrates_type_name);
                         //Console.ReadKey();
@@ -118,15 +135,18 @@ namespace ExtractPDFApprovedSpecies
                             }
                         }
 
-                        if(index < texts.Length)
+                        string common_name = string.Empty;
+                        if (index < texts.Length)
                         {
                             //Console.Write(field_name[1] + "{");
                             //Console.Write("\t\t{");
-                            string common_name = line.Substring(sub_index).Trim();
+                            common_name = line.Substring(sub_index).Trim();
                             Console.Write(common_name);
                         }
 
-                        
+                        ProcessMarineSpeciesData(marine_class_id, line_count, scientific_name, common_name);
+
+
                         Console.Write("\n");
                     }
                     
@@ -136,6 +156,102 @@ namespace ExtractPDFApprovedSpecies
             page_count++;
             // Debug
             //Console.WriteLine($"Page {page_count} been precessed.");
+        }
+
+        private int ProcessMarineClassData(string selected_field)
+        {
+            SqlCommand command;
+            //string selected_field = GetSelectedWord(line, field_name);
+
+
+            /*
+                CREATE TABLE [dbo].[MARINE_CLASS]
+                (
+                    [ID_PK] INT NOT NULL PRIMARY KEY IDENTITY, 
+                    [TEXT] NVARCHAR(40) NULL, 
+                    [SCHEDULE4] NVARCHAR(40) NULL
+                )      
+
+            */
+
+            /* Check whether the field name is in [MARINE_CLASS] */
+            //sql_statement = "SELECT ID_PK FROM [MARINE_CLASS] WHERE [SCHEDULE4] = @FIELD_TEXT";
+
+            command = new SqlCommand();
+            command.CommandText = "SELECT ID_PK FROM [MARINE_CLASS] WHERE [SCHEDULE4] = @FIELD_TEXT";
+            command.Parameters.AddWithValue("@FIELD_TEXT", selected_field);
+
+            int field_id = DAOHelper.RetreiveID(command);
+            //command.CommandText = "SELECT ID_PK FROM [MARINE_CLASS] WHERE [SCHEDULE4] = @FIELD_TEXT";
+
+            SqlCommand insertDataCommand = new SqlCommand();
+            insertDataCommand.Parameters.AddWithValue("@FIELD_TEXT", selected_field);
+
+            if (field_id == -1) /* New Record */
+            {
+                insertDataCommand.CommandText = "INSERT INTO [MARINE_CLASS] ([SCHEDULE4]) VALUES(@FIELD_TEXT) ;";
+                DAOHelper.InsertData(insertDataCommand);
+
+                field_id = DAOHelper.RetreiveID(command);
+            }
+            else
+            {
+                insertDataCommand.CommandText = "UPDATE [MARINE_CLASS]  SET [SCHEDULE4] = @FIELD_TEXT WHERE [ID_PK] = @ID_PK ;";
+                insertDataCommand.Parameters.AddWithValue("@ID_PK", field_id);
+                DAOHelper.InsertData(insertDataCommand);
+            }
+
+            //return command;
+            return field_id;
+        }
+
+
+        private void ProcessMarineSpeciesData(int class_id, int counter, string scientific, string common)
+        {
+            int record_id = -1;
+            SqlCommand command;
+            /*
+                CREATE TABLE [dbo].[MARINE_SPECIES]
+                (
+                    [ID_PK] INT NOT NULL IDENTITY , 
+                    [CLASS_FK] INT NOT NULL, 
+                    [SPECIES_FK] INT NOT NULL, 
+                    [SCIENTIFIC] NVARCHAR(40) NOT NULL, 
+                    [COMMON] NVARCHAR(50) NULL, 
+                    [TEXT] NVARCHAR(50) NULL, 
+                    CONSTRAINT [PK_MARINE_SPECIES] PRIMARY KEY ([ID_PK]) 
+                )              
+            */
+
+            command = new SqlCommand();
+            command.CommandText = "SELECT ID_PK FROM [MARINE_SPECIES] WHERE [SCIENTIFIC] = @SCIENTIFIC_TEXT";
+            command.Parameters.AddWithValue("@SCIENTIFIC_TEXT", scientific);
+
+            record_id = DAOHelper.RetreiveID(command);
+
+            SqlCommand insertDataCommand = new SqlCommand();
+            insertDataCommand.Parameters.AddWithValue("@CLASS_ID", class_id);
+            insertDataCommand.Parameters.AddWithValue("@SPECIES_ID", counter);
+            insertDataCommand.Parameters.AddWithValue("@SCIENTIFIC_TEXT", scientific);
+            insertDataCommand.Parameters.AddWithValue("@COMMON_TEXT", scientific);
+
+            if (record_id == -1) /* New Record */
+            {
+                insertDataCommand.CommandText = "INSERT INTO [MARINE_SPECIES] " +
+                    "([CLASS_FK], [SPECIES_FK], [SCIENTIFIC], [COMMON]) VALUES (@CLASS_ID, @SPECIES_ID, @SCIENTIFIC_TEXT,@COMMON_TEXT) ;";
+                DAOHelper.InsertData(insertDataCommand);
+                //record_id = DAOHelper.RetreiveID(command);
+            }
+            else
+            {
+                insertDataCommand.CommandText = "UPDATE [MARINE_SPECIES] " +
+                    "SET [CLASS_FK] = @CLASS_ID, [SPECIES_FK] = @SPECIES_ID, [SCIENTIFIC] = @SCIENTIFIC_TEXT, [COMMON] = @COMMON_TEXT " +
+                                                " WHERE [ID_PK] = @ID_PK ;";
+                insertDataCommand.Parameters.AddWithValue("@ID_PK", record_id);
+                DAOHelper.InsertData(insertDataCommand);
+            }
+
+            //return record_id;
         }
     }
 }
