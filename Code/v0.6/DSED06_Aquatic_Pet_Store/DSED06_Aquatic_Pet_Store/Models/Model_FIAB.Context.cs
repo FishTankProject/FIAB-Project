@@ -27,5 +27,7 @@ namespace DSED06_Aquatic_Pet_Store.Models
     
         public virtual DbSet<MARINE_FAMILY> MARINE_FAMILY { get; set; }
         public virtual DbSet<MARINE_TYPE> MARINE_TYPE { get; set; }
+        public virtual DbSet<MARINE_CLASS> MARINE_CLASS { get; set; }
+        public virtual DbSet<MARINE_SPECIES> MARINE_SPECIES { get; set; }
     }
 }

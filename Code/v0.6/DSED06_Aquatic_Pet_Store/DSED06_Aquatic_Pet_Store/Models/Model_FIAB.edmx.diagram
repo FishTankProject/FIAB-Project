@@ -7,6 +7,9 @@
       <Diagram DiagramId="1558d92495784443953732cb20d1258c" Name="Diagram1">
         <EntityTypeShape EntityType="FIABModel.MARINE_FAMILY" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FIABModel.MARINE_TYPE" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FIABModel.MARINE_CLASS" Width="1.5" PointX="0.75" PointY="4.25" />
+        <EntityTypeShape EntityType="FIABModel.MARINE_SPECIES" Width="1.5" PointX="3" PointY="4" />
+        <AssociationConnector Association="FIABModel.FK_MARINE_SPECIES_MARINE_CLASS" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

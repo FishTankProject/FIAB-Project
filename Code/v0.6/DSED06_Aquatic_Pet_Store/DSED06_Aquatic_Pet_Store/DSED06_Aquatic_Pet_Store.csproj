@@ -199,10 +199,17 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Controllers\MARINE_FAMILYController.cs" />
+    <Compile Include="Controllers\MARINE_SPECIESController.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MARINE_CLASS.cs">
+      <DependentUpon>Model_FIAB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MARINE_FAMILY.cs">
+      <DependentUpon>Model_FIAB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MARINE_SPECIES.cs">
       <DependentUpon>Model_FIAB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MARINE_TYPE.cs">
@@ -307,6 +314,13 @@
     <Content Include="Views\MARINE_FAMILY\Edit.cshtml" />
     <Content Include="Views\MARINE_FAMILY\Index.cshtml" />
     <Content Include="Views\SYSTEM\Index.cshtml" />
+    <Content Include="Views\MARINE_SPECIES\Create.cshtml" />
+    <Content Include="Views\MARINE_SPECIES\Delete.cshtml" />
+    <Content Include="Views\MARINE_SPECIES\Details.cshtml" />
+    <Content Include="Views\MARINE_SPECIES\Edit.cshtml" />
+    <Content Include="Views\MARINE_SPECIES\Index1.cshtml" />
+    <Content Include="Views\MARINE_SPECIES\SpeciesByClass.cshtml" />
+    <Content Include="Views\MARINE_SPECIES\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

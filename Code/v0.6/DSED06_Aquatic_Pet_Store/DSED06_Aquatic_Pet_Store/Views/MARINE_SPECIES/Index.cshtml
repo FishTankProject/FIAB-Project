@@ -1,0 +1,53 @@
+﻿@model DSED06_Aquatic_Pet_Store.Models.MARINE_SPECIES
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>Species by Marine Class</h3>
+<div id="MarineDropDown">
+    @Html.DropDownList( "MarineClass", "select a marine class")
+</div>
+<br />
+<div id="target">
+</div>
+
+<!-- https://stackoverflow.com/questions/11774741/load-partial-view-depending-on-dropdown-selection-in-mvc3  -->
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+<script type="text/javascript">
+    ///* This is change event for your dropdownlist */
+    //$('#myDropDown').change( function() {
+
+    //     /* Get the selected value of dropdownlist */
+    //     var selectedID = $(this).val();
+
+    //     /* Request the partial view with .get request. */
+    //     $.get('/Controller/SpeciesByClass/' + selectedID , function(data) {
+
+    //         /* data is the pure html returned from action method, load it to your page */
+    //         $('#partialPlaceHolder').html(data);
+    //         /* little fade in effect */
+    //         $('#partialPlaceHolder').fadeIn('fast');
+    //     });
+
+    //});
+
+    /* http://weblogs.thinktecture.com/cnagel/2011/06/filter-and-display-data-with-aspnet-mvc-part-2partial-views-and-jquery.html */
+
+    /* https://www.aspsnippets.com/Articles/Get-selected-Text-and-Value-of-DropDownList-in-OnChange-event-using-JavaScript-and-jQuery.aspx */
+
+    $(function () {
+        $("#MarineDropDown").change(
+            function () {
+                var SelectedText = $(this).find("option:selected").val();
+                //alert("Selected Text: " + SelectedText);
+
+                $.get('@Url.Action("SpeciesByClass")',
+                    { name: SelectedText }, function (data) {
+                    $("#target").html(data);
+                });
+        });
+    });
+</script>

@@ -4,12 +4,31 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="FIABModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="FIABModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="MARINE_CLASS">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TEXT" Type="nvarchar" MaxLength="40" />
+          <Property Name="SCHEDULE4" Type="nvarchar" MaxLength="40" />
+        </EntityType>
         <EntityType Name="MARINE_FAMILY">
           <Key>
             <PropertyRef Name="ID_PK" />
           </Key>
           <Property Name="ID_PK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TEXT" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MARINE_SPECIES">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CLASS_FK" Type="int" Nullable="false" />
+          <Property Name="SPECIES_FK" Type="int" Nullable="false" />
+          <Property Name="SCIENTIFIC" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="COMMON" Type="nvarchar" MaxLength="50" />
           <Property Name="TEXT" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="MARINE_TYPE">
@@ -19,12 +38,29 @@
           <Property Name="ID_PK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TEXT" Type="nvarchar" MaxLength="40" />
         </EntityType>
+        <Association Name="FK_MARINE_SPECIES_MARINE_CLASS">
+          <End Role="MARINE_CLASS" Type="Self.MARINE_CLASS" Multiplicity="1" />
+          <End Role="MARINE_SPECIES" Type="Self.MARINE_SPECIES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MARINE_CLASS">
+              <PropertyRef Name="ID_PK" />
+            </Principal>
+            <Dependent Role="MARINE_SPECIES">
+              <PropertyRef Name="CLASS_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="FIABModelStoreContainer">
+          <EntitySet Name="MARINE_CLASS" EntityType="Self.MARINE_CLASS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MARINE_FAMILY" EntityType="Self.MARINE_FAMILY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MARINE_SPECIES" EntityType="Self.MARINE_SPECIES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MARINE_TYPE" EntityType="Self.MARINE_TYPE" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_MARINE_SPECIES_MARINE_CLASS" Association="Self.FK_MARINE_SPECIES_MARINE_CLASS">
+            <End Role="MARINE_CLASS" EntitySet="MARINE_CLASS" />
+            <End Role="MARINE_SPECIES" EntitySet="MARINE_SPECIES" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FIABModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -45,7 +81,46 @@
         <EntityContainer Name="FIABEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="MARINE_FAMILY" EntityType="Self.MARINE_FAMILY" />
           <EntitySet Name="MARINE_TYPE" EntityType="Self.MARINE_TYPE" />
+          <EntitySet Name="MARINE_CLASS" EntityType="FIABModel.MARINE_CLASS" />
+          <EntitySet Name="MARINE_SPECIES" EntityType="FIABModel.MARINE_SPECIES" />
+          <AssociationSet Name="FK_MARINE_SPECIES_MARINE_CLASS" Association="FIABModel.FK_MARINE_SPECIES_MARINE_CLASS">
+            <End Role="MARINE_CLASS" EntitySet="MARINE_CLASS" />
+            <End Role="MARINE_SPECIES" EntitySet="MARINE_SPECIES" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="MARINE_CLASS">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TEXT" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="SCHEDULE4" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MARINE_SPECIES" Relationship="FIABModel.FK_MARINE_SPECIES_MARINE_CLASS" FromRole="MARINE_CLASS" ToRole="MARINE_SPECIES" />
+        </EntityType>
+        <EntityType Name="MARINE_SPECIES">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CLASS_FK" Type="Int32" Nullable="false" />
+          <Property Name="SPECIES_FK" Type="Int32" Nullable="false" />
+          <Property Name="SCIENTIFIC" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="COMMON" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TEXT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MARINE_CLASS" Relationship="FIABModel.FK_MARINE_SPECIES_MARINE_CLASS" FromRole="MARINE_SPECIES" ToRole="MARINE_CLASS" />
+        </EntityType>
+        <Association Name="FK_MARINE_SPECIES_MARINE_CLASS">
+          <End Type="FIABModel.MARINE_CLASS" Role="MARINE_CLASS" Multiplicity="1" />
+          <End Type="FIABModel.MARINE_SPECIES" Role="MARINE_SPECIES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MARINE_CLASS">
+              <PropertyRef Name="ID_PK" />
+            </Principal>
+            <Dependent Role="MARINE_SPECIES">
+              <PropertyRef Name="CLASS_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -65,6 +140,27 @@
               <MappingFragment StoreEntitySet="MARINE_TYPE">
                 <ScalarProperty Name="ID_PK" ColumnName="ID_PK" />
                 <ScalarProperty Name="TEXT" ColumnName="TEXT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MARINE_CLASS">
+            <EntityTypeMapping TypeName="FIABModel.MARINE_CLASS">
+              <MappingFragment StoreEntitySet="MARINE_CLASS">
+                <ScalarProperty Name="SCHEDULE4" ColumnName="SCHEDULE4" />
+                <ScalarProperty Name="TEXT" ColumnName="TEXT" />
+                <ScalarProperty Name="ID_PK" ColumnName="ID_PK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MARINE_SPECIES">
+            <EntityTypeMapping TypeName="FIABModel.MARINE_SPECIES">
+              <MappingFragment StoreEntitySet="MARINE_SPECIES">
+                <ScalarProperty Name="TEXT" ColumnName="TEXT" />
+                <ScalarProperty Name="COMMON" ColumnName="COMMON" />
+                <ScalarProperty Name="SCIENTIFIC" ColumnName="SCIENTIFIC" />
+                <ScalarProperty Name="SPECIES_FK" ColumnName="SPECIES_FK" />
+                <ScalarProperty Name="CLASS_FK" ColumnName="CLASS_FK" />
+                <ScalarProperty Name="ID_PK" ColumnName="ID_PK" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
