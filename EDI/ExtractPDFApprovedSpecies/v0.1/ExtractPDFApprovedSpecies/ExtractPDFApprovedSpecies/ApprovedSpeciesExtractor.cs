@@ -143,10 +143,7 @@ namespace ExtractPDFApprovedSpecies
                             common_name = line.Substring(sub_index).Trim();
                             Console.Write(common_name);
                         }
-
                         ProcessMarineSpeciesData(marine_class_id, line_count, scientific_name, common_name);
-
-
                         Console.Write("\n");
                     }
                     
