@@ -1,6 +1,8 @@
 ﻿using ExtractPDF.Lib;
+using ExtractPDF.Lib.DAO;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +19,9 @@ namespace ExtractPDFSchedule3
         string genus_name = string.Empty;
         string climate_name = string.Empty;
         string species_name = string.Empty;
+
+        int family_id = -1;
+
 
         public override void ProcessPage(string page_content)
         {
@@ -68,6 +73,10 @@ namespace ExtractPDFSchedule3
                         if (genus_name != texts[1].Trim())
                         {
                             family_name = texts[0].Trim();
+
+                            /* create or retreive family name from database  */
+                            family_id = ProcessMarineFamilyData(family_name);
+
                             family_count = 0;
                         }
                     }
@@ -143,6 +152,9 @@ namespace ExtractPDFSchedule3
                                 
                         }
 
+                        /* update species table with family name */
+                        updateSpeciesData(family_id, genus_name.Trim() + " " + species_name.Trim());
+
 
                         //Console.Write(" ==> " + texts.Length);
                         //Console.Write($"{line}");
@@ -160,5 +172,87 @@ namespace ExtractPDFSchedule3
             //Console.WriteLine($"Page {page_count} been precessed.");
 
         }
+
+        private void updateSpeciesData(int family_id, string selected_field)
+        {
+            /*
+                CREATE TABLE [dbo].[MARINE_SPECIES] (
+                    [ID_PK]      INT           IDENTITY (1, 1) NOT NULL,
+                    [CLASS_FK]   INT           NOT NULL,
+                    [SPECIES_FK] INT           NOT NULL,
+                    [SCIENTIFIC] NVARCHAR (40) NOT NULL,
+                    [COMMON]     NVARCHAR (80) NULL,
+                    [TEXT]       NVARCHAR (50) NULL,
+                    [FAMILY_FK] INT NULL, 
+                    CONSTRAINT [PK_MARINE_SPECIES] PRIMARY KEY CLUSTERED ([ID_PK] ASC),
+                    CONSTRAINT [FK_MARINE_SPECIES_MARINE_CLASS] FOREIGN KEY ([CLASS_FK]) REFERENCES [dbo].[MARINE_CLASS] ([ID_PK])
+                );
+             */
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT ID_PK FROM [MARINE_SPECIES] WHERE [SCIENTIFIC] = @FIELD_TEXT";
+            command.Parameters.AddWithValue("@FIELD_TEXT", selected_field);
+
+            int field_id = DAOHelper.RetreiveID(command);
+
+
+            if (field_id > 0 && family_id > 0)
+            {
+                SqlCommand executeDataCommand = new SqlCommand();
+                
+                executeDataCommand.CommandText = "UPDATE [MARINE_SPECIES]  SET [FAMILY_FK] = @FAMILY_ID WHERE [ID_PK] = @ID_PK ;";
+                executeDataCommand.Parameters.AddWithValue("@FAMILY_ID", family_id);
+                executeDataCommand.Parameters.AddWithValue("@ID_PK", field_id);
+                DAOHelper.InsertData(executeDataCommand);
+                Console.Write(" ==> Record Found !!!");
+            }
+            /*
+             * Please note that due to an error in the doucment, the following reocord is not updated with family id
+             * 
+             *          Puntius cumingii, it should be Puntius cumungii
+             * 
+             */
+        }
+
+        private int ProcessMarineFamilyData(string selected_field)
+        {
+            
+            /*
+                CREATE TABLE [dbo].[MARINE_FAMILY] (
+                    [ID_PK]    INT           IDENTITY (1, 1) NOT NULL,
+                    [TEXT]     NVARCHAR (25) NOT NULL,
+                    [SCHEDULE3] NVARCHAR (25) NOT NULL,
+                    PRIMARY KEY CLUSTERED ([ID_PK] ASC)
+                );
+             */
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT ID_PK FROM [MARINE_FAMILY] WHERE [SCHEDULE3] = @FIELD_TEXT";
+            command.Parameters.AddWithValue("@FIELD_TEXT", selected_field);
+
+            int field_id = DAOHelper.RetreiveID(command);
+
+            return field_id;
+
+            SqlCommand executeDataCommand = new SqlCommand();
+            executeDataCommand.Parameters.AddWithValue("@FIELD_TEXT", selected_field);
+
+            if (field_id == -1) /* New Record */
+            {
+                executeDataCommand.CommandText = "INSERT INTO [MARINE_FAMILY] ([SCHEDULE3],[TEXT]) VALUES(@FIELD_TEXT, @FIELD_TEXT) ;";
+                DAOHelper.InsertData(executeDataCommand);
+
+                field_id = DAOHelper.RetreiveID(command);
+            }
+            else
+            {
+                executeDataCommand.CommandText = "UPDATE [MARINE_FAMILY]  SET [SCHEDULE3] = @FIELD_TEXT WHERE [ID_PK] = @ID_PK ;";
+                executeDataCommand.Parameters.AddWithValue("@ID_PK", field_id);
+                DAOHelper.InsertData(executeDataCommand);
+            }
+
+            return field_id;
+        }
+
     }
 }

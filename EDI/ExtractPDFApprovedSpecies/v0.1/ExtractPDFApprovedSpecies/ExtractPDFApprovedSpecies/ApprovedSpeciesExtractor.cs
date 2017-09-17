@@ -181,21 +181,21 @@ namespace ExtractPDFApprovedSpecies
             int field_id = DAOHelper.RetreiveID(command);
             //command.CommandText = "SELECT ID_PK FROM [MARINE_CLASS] WHERE [SCHEDULE4] = @FIELD_TEXT";
 
-            SqlCommand insertDataCommand = new SqlCommand();
-            insertDataCommand.Parameters.AddWithValue("@FIELD_TEXT", selected_field);
+            SqlCommand executeDataCommand = new SqlCommand();
+            executeDataCommand.Parameters.AddWithValue("@FIELD_TEXT", selected_field);
 
             if (field_id == -1) /* New Record */
             {
-                insertDataCommand.CommandText = "INSERT INTO [MARINE_CLASS] ([SCHEDULE4]) VALUES(@FIELD_TEXT) ;";
-                DAOHelper.InsertData(insertDataCommand);
+                executeDataCommand.CommandText = "INSERT INTO [MARINE_CLASS] ([SCHEDULE4]) VALUES(@FIELD_TEXT) ;";
+                DAOHelper.InsertData(executeDataCommand);
 
                 field_id = DAOHelper.RetreiveID(command);
             }
             else
             {
-                insertDataCommand.CommandText = "UPDATE [MARINE_CLASS]  SET [SCHEDULE4] = @FIELD_TEXT WHERE [ID_PK] = @ID_PK ;";
-                insertDataCommand.Parameters.AddWithValue("@ID_PK", field_id);
-                DAOHelper.InsertData(insertDataCommand);
+                executeDataCommand.CommandText = "UPDATE [MARINE_CLASS]  SET [SCHEDULE4] = @FIELD_TEXT WHERE [ID_PK] = @ID_PK ;";
+                executeDataCommand.Parameters.AddWithValue("@ID_PK", field_id);
+                DAOHelper.InsertData(executeDataCommand);
             }
 
             //return command;
