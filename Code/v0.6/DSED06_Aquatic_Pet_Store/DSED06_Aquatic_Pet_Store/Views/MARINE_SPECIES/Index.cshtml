@@ -5,18 +5,47 @@
 }
 
 <h3>Species by Marine Class</h3>
-<div id="MarineDropDown">
-    @Html.DropDownList( "MarineClass", "select a marine class")
-</div>
+
+
+
+    <div id="MarineDropDown">
+        @Html.DropDownList("MarineClass", "select a marine class")
+    </div>
 <br />
-<div id="target">
-</div>
+<!--
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MARINE_CLASS.SCHEDULE4)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SPECIES_FK)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SCIENTIFIC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.COMMON)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TEXT)
+        </th>
 
-<!-- https://stackoverflow.com/questions/11774741/load-partial-view-depending-on-dropdown-selection-in-mvc3  -->
+        <th></th>
+    </tr>
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
-<script type="text/javascript">
+</table>
+-->
+    <div id="target">
+    </div>
+
+
+    <!-- https://stackoverflow.com/questions/11774741/load-partial-view-depending-on-dropdown-selection-in-mvc3  -->
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+    <script type="text/javascript">
     ///* This is change event for your dropdownlist */
     //$('#myDropDown').change( function() {
 
@@ -50,4 +79,4 @@
                 });
         });
     });
-</script>
+    </script>

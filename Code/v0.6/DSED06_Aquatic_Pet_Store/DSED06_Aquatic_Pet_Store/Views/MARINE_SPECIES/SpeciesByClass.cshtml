@@ -4,14 +4,20 @@
     ViewBag.Title = "Species By Marine Class";
 }
 
+<!--
 <h2>SpeciesByClass</h2>
 
 <p>
-    <!-- 
+     
     @Html.ActionLink("Create New", "Create")
-    -->
-</p>
+    
+</p>    
+-->
+
+
+
 <table class="table">
+    
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.MARINE_CLASS.SCHEDULE4)
@@ -31,6 +37,7 @@
 
         <th></th>
     </tr>
+    
 
     @foreach (var item in Model)
     {

@@ -211,15 +211,15 @@ namespace ExtractPDFApprovedSpecies
             int record_id = -1;
             SqlCommand command;
             /*
-                CREATE TABLE [dbo].[MARINE_SPECIES]
-                (
-                    [ID_PK] INT NOT NULL IDENTITY , 
-                    [CLASS_FK] INT NOT NULL, 
-                    [SPECIES_FK] INT NOT NULL, 
-                    [SCIENTIFIC] NVARCHAR(40) NOT NULL, 
-                    [COMMON] NVARCHAR(50) NULL, 
-                    [TEXT] NVARCHAR(50) NULL, 
-                    CONSTRAINT [PK_MARINE_SPECIES] PRIMARY KEY ([ID_PK]) 
+                CREATE TABLE [dbo].[MARINE_SPECIES] (
+                    [ID_PK]      INT           IDENTITY (1, 1) NOT NULL,
+                    [CLASS_FK]   INT           NOT NULL,
+                    [SPECIES_FK] INT           NOT NULL,
+                    [SCIENTIFIC] NVARCHAR (40) NOT NULL,
+                    [COMMON]     NVARCHAR (80) NULL,
+                    [TEXT]       NVARCHAR (50) NULL,
+                    CONSTRAINT [PK_MARINE_SPECIES] PRIMARY KEY CLUSTERED ([ID_PK] ASC),
+                    CONSTRAINT [FK_MARINE_SPECIES_MARINE_CLASS] FOREIGN KEY ([CLASS_FK]) REFERENCES [dbo].[MARINE_CLASS] ([ID_PK])
                 )              
             */
 
@@ -233,7 +233,7 @@ namespace ExtractPDFApprovedSpecies
             insertDataCommand.Parameters.AddWithValue("@CLASS_ID", class_id);
             insertDataCommand.Parameters.AddWithValue("@SPECIES_ID", counter);
             insertDataCommand.Parameters.AddWithValue("@SCIENTIFIC_TEXT", scientific);
-            insertDataCommand.Parameters.AddWithValue("@COMMON_TEXT", scientific);
+            insertDataCommand.Parameters.AddWithValue("@COMMON_TEXT", common);
 
             if (record_id == -1) /* New Record */
             {

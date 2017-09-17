@@ -10,6 +10,13 @@ namespace ExtractPDFSchedule3
     public class Schedule3Extractor : BasePDFExtractor
     {
         int family_count = 0;
+        int line_count = 0;
+
+        string marine_class = string.Empty;
+        string family_name = string.Empty;
+        string genus_name = string.Empty;
+        string climate_name = string.Empty;
+        string species_name = string.Empty;
 
         public override void ProcessPage(string page_content)
         {
@@ -22,8 +29,6 @@ namespace ExtractPDFSchedule3
             ignored_words[size] = "Schedule 3";
             ignored_words[size + 1] = "Part 2";
 
-            int line_count = 0;
-            
             bool ignore_word_found;
             foreach (string line in lines_content)
             {
@@ -46,7 +51,9 @@ namespace ExtractPDFSchedule3
                             break;
                         }
 
-                    Console.Write("\t\t\t[" + line.Substring(index).Trim() + "] \n");
+                    marine_class = line.Substring(index).Trim();
+
+                    Console.Write( "".PadLeft(5,' ') + "Marine Class : " + marine_class + "\n");
                 }
                 else if( line.Contains(page_header))
                 {
@@ -56,8 +63,15 @@ namespace ExtractPDFSchedule3
                 {
                     string[] texts = line.Split(' ');
 
-                    if (texts[0] != string.Empty)
-                        family_count = 0;
+                    if (texts[0] != string.Empty && texts[0].Length > 5)
+                    {
+                        if (genus_name != texts[1].Trim())
+                        {
+                            family_name = texts[0].Trim();
+                            family_count = 0;
+                        }
+                    }
+                        
 
                     /*
                      * ignore when a line contains less than 3 words
@@ -99,9 +113,37 @@ namespace ExtractPDFSchedule3
                                 default: pad = 5; break;
 
                             }
-                            if (i < 4 || (i > 3 && texts[i].Trim() != string.Empty))
+                            if(i==0)
+                            {
+                                Console.Write(family_name.PadRight(pad, ' '));
+                            }
+                            else if(i==1)
+                            {
+                                if(texts[i] != string.Empty)
+                                {
+                                    genus_name = texts[i].Trim();
+                                }
+                                Console.Write(genus_name.PadRight(pad, ' '));
+                            }
+                            else if(i==2)
+                            {
+                                species_name = texts[i].Trim();
+                                Console.Write(species_name.PadRight(pad, ' '));
+                            }
+                            else if(i==3)
+                            {
+                                climate_name = texts[i].Trim();
+                                Console.Write(climate_name.PadRight(pad, ' '));
+                            }
+                            //else if (i < 4 || (i > 3 && texts[i].Trim() != string.Empty))
+                            else if(texts[i].Trim() != string.Empty)
+                            {
                                 Console.Write(texts[i].Trim().PadRight(pad, ' '));
+                            }
+                                
                         }
+
+
                         //Console.Write(" ==> " + texts.Length);
                         //Console.Write($"{line}");
                         Console.Write("\n");
