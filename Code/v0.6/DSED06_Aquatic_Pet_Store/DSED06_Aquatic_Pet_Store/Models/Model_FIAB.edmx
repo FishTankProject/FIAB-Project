@@ -20,6 +20,7 @@
           <Property Name="ID_PK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TEXT" Type="nvarchar" MaxLength="25" Nullable="false" />
           <Property Name="SCHEDULE3" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="FLAG" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="MARINE_SPECIES">
           <Key>
@@ -92,6 +93,7 @@
           <Property Name="TEXT" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SCHEDULE3" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="MARINE_SPECIES" Relationship="FIABModel.FK_MARINE_SPECIES_MARINE_FAMILY" FromRole="MARINE_FAMILY" ToRole="MARINE_SPECIES" />
+          <Property Name="FLAG" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="MARINE_TYPE">
           <Key>
@@ -172,6 +174,7 @@
           <EntitySetMapping Name="MARINE_FAMILY">
             <EntityTypeMapping TypeName="FIABModel.MARINE_FAMILY">
               <MappingFragment StoreEntitySet="MARINE_FAMILY">
+                <ScalarProperty Name="FLAG" ColumnName="FLAG" />
                 <ScalarProperty Name="SCHEDULE3" ColumnName="SCHEDULE3" />
                 <ScalarProperty Name="ID_PK" ColumnName="ID_PK" />
                 <ScalarProperty Name="TEXT" ColumnName="TEXT" />

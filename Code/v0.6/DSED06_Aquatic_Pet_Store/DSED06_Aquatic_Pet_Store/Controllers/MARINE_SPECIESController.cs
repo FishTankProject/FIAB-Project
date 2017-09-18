@@ -143,5 +143,7 @@ namespace DSED06_Aquatic_Pet_Store
 
                 //db.Racers.Where(r => r.Country == id).OrderByDescending(r => r.Wins).ThenBy(r => r.Lastname).ToList());
         }
+
+
     }
 }

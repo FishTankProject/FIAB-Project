@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="1558d92495784443953732cb20d1258c" Name="Diagram1">
-        <EntityTypeShape EntityType="FIABModel.MARINE_FAMILY" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="FIABModel.MARINE_FAMILY" Width="1.5" PointX="1" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FIABModel.MARINE_TYPE" Width="1.5" PointX="3.25" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="FIABModel.MARINE_CLASS" Width="1.5" PointX="0.75" PointY="4" />
         <EntityTypeShape EntityType="FIABModel.MARINE_SPECIES" Width="1.5" PointX="3.125" PointY="2.75" />

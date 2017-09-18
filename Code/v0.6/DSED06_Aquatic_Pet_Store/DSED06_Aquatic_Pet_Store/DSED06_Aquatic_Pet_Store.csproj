@@ -330,6 +330,7 @@
     <Content Include="Views\MARINE_SPECIES\Details.cshtml" />
     <Content Include="Views\MARINE_SPECIES\Edit.cshtml" />
     <Content Include="Views\MARINE_SPECIES\Index.cshtml" />
+    <Content Include="Views\MARINE_FAMILY\ViewList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

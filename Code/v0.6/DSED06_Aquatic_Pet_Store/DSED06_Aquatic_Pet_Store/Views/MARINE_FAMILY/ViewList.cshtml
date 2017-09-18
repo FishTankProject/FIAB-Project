@@ -1,0 +1,66 @@
+﻿@model IEnumerable<DSED06_Aquatic_Pet_Store.Models.MARINE_FAMILY>
+
+@* http://www.c-sharpcorner.com/UploadFile/f82e9a/data-displaying-in-table-format-in-diffrent-ways-in-mvc/ *@
+@* http://www.techstrikers.com/Articles/webgrid-in-mvc5-with-razor-view-and-entity-framework6.php *@
+@* https://www.danylkoweb.com/Blog/the-ultimate-cookbook-for-the-aspnet-mvc-webgrid-B1 *@
+
+@{
+    ViewBag.Title = "ViewList";
+    var grid = new WebGrid(source: Model);
+}
+@grid.GetHtml()
+
+
+@* https://www.w3schools.com/asp/webpages_webgrid.asp *@
+@*<html>
+<head>
+    <title>Displaying Data Using the WebGrid Helper</title>
+</head>
+<body>
+    <h1>Small Bakery Products</h1>
+    <div id="grid">
+        @grid.GetHtml()
+    </div>
+</body>
+</html>*@
+
+@*
+    <h2>ViewList</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TEXT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SCHEDULE3)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FLAG)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TEXT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SCHEDULE3)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FLAG)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID_PK }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID_PK }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID_PK })
+        </td>
+    </tr>
+}
+
+</table>*@

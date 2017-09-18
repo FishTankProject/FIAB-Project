@@ -123,5 +123,10 @@ namespace DSED06_Aquatic_Pet_Store.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult ViewList()
+        {
+            return View(db.MARINE_FAMILY.ToList());
+        }
     }
 }
