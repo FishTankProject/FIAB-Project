@@ -318,8 +318,6 @@
     <Content Include="Views\MARINE_SPECIES\Delete.cshtml" />
     <Content Include="Views\MARINE_SPECIES\Details.cshtml" />
     <Content Include="Views\MARINE_SPECIES\Edit.cshtml" />
-    <Content Include="Views\MARINE_SPECIES\Index1.cshtml" />
-    <Content Include="Views\MARINE_SPECIES\SpeciesByClass.cshtml" />
     <Content Include="Views\MARINE_SPECIES\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

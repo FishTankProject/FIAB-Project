@@ -20,7 +20,9 @@ namespace DSED06_Aquatic_Pet_Store.Models
         public string SCIENTIFIC { get; set; }
         public string COMMON { get; set; }
         public string TEXT { get; set; }
+        public Nullable<int> FAMILY_FK { get; set; }
     
         public virtual MARINE_CLASS MARINE_CLASS { get; set; }
+        public virtual MARINE_FAMILY MARINE_FAMILY { get; set; }
     }
 }

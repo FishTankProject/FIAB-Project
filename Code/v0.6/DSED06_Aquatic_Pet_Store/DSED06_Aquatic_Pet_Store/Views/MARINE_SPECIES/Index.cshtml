@@ -1,25 +1,39 @@
-﻿@model DSED06_Aquatic_Pet_Store.Models.MARINE_SPECIES
+﻿@model IEnumerable<DSED06_Aquatic_Pet_Store.Models.MARINE_SPECIES>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h3>Species by Marine Class</h3>
+<h2>Index</h2>
 
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
 
+<!-- https://stackoverflow.com/questions/446624/table-cell-widths-fixing-width-wrapping-truncating-long-words  -->
+@*<head>
+    <style type="text/css">
+        td {
+            word-wrap: break-word;
+            min-width: 10px;
+            max-width: 30px;
+        }
+    </style>
+</head>*@
 
-    <div id="MarineDropDown">
-        @Html.DropDownList("MarineClass", "select a marine class")
-    </div>
-<br />
-<!--
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.MARINE_CLASS.SCHEDULE4)
+            @*@Html.DisplayNameFor(model => model.MARINE_CLASS.TEXT)*@
+            Marine Class
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SPECIES_FK)
+            @*@Html.DisplayNameFor(model => model.MARINE_FAMILY.TEXT)*@
+            Family Name
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.SPECIES_FK)*@
+            No.
         </th>
         <th>
             @Html.DisplayNameFor(model => model.SCIENTIFIC)
@@ -27,56 +41,43 @@
         <th>
             @Html.DisplayNameFor(model => model.COMMON)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.TEXT)
-        </th>
+        </th>*@
+
 
         <th></th>
     </tr>
 
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MARINE_CLASS.SCHEDULE4)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MARINE_FAMILY.TEXT)
+        </td>
+        <td max-width: 10px>
+            @Html.DisplayFor(modelItem => item.SPECIES_FK)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SCIENTIFIC)
+        </td>
+        <td word-wrap: break-word; max-width: 30px>
+            @Html.DisplayFor(modelItem => item.COMMON)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.TEXT)
+        </td>*@
+
+
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID_PK }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID_PK }) 
+            @*|
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID_PK })*@
+        </td>
+    </tr>
+}
 
 </table>
--->
-    <div id="target">
-    </div>
-
-
-    <!-- https://stackoverflow.com/questions/11774741/load-partial-view-depending-on-dropdown-selection-in-mvc3  -->
-
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
-    <script type="text/javascript">
-    ///* This is change event for your dropdownlist */
-    //$('#myDropDown').change( function() {
-
-    //     /* Get the selected value of dropdownlist */
-    //     var selectedID = $(this).val();
-
-    //     /* Request the partial view with .get request. */
-    //     $.get('/Controller/SpeciesByClass/' + selectedID , function(data) {
-
-    //         /* data is the pure html returned from action method, load it to your page */
-    //         $('#partialPlaceHolder').html(data);
-    //         /* little fade in effect */
-    //         $('#partialPlaceHolder').fadeIn('fast');
-    //     });
-
-    //});
-
-    /* http://weblogs.thinktecture.com/cnagel/2011/06/filter-and-display-data-with-aspnet-mvc-part-2partial-views-and-jquery.html */
-
-    /* https://www.aspsnippets.com/Articles/Get-selected-Text-and-Value-of-DropDownList-in-OnChange-event-using-JavaScript-and-jQuery.aspx */
-
-    $(function () {
-        $("#MarineDropDown").change(
-            function () {
-                var SelectedText = $(this).find("option:selected").val();
-                //alert("Selected Text: " + SelectedText);
-
-                $.get('@Url.Action("SpeciesByClass")',
-                    { name: SelectedText }, function (data) {
-                    $("#target").html(data);
-                });
-        });
-    });
-    </script>

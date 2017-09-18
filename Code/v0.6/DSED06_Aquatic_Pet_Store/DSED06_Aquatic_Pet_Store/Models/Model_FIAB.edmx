@@ -18,7 +18,8 @@
             <PropertyRef Name="ID_PK" />
           </Key>
           <Property Name="ID_PK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TEXT" Type="nvarchar" MaxLength="50" />
+          <Property Name="TEXT" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="SCHEDULE3" Type="nvarchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <EntityType Name="MARINE_SPECIES">
           <Key>
@@ -28,15 +29,18 @@
           <Property Name="CLASS_FK" Type="int" Nullable="false" />
           <Property Name="SPECIES_FK" Type="int" Nullable="false" />
           <Property Name="SCIENTIFIC" Type="nvarchar" MaxLength="40" Nullable="false" />
-          <Property Name="COMMON" Type="nvarchar" MaxLength="50" />
+          <Property Name="COMMON" Type="nvarchar" MaxLength="80" />
           <Property Name="TEXT" Type="nvarchar" MaxLength="50" />
+          <Property Name="FAMILY_FK" Type="int" />
         </EntityType>
         <EntityType Name="MARINE_TYPE">
           <Key>
             <PropertyRef Name="ID_PK" />
           </Key>
           <Property Name="ID_PK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TEXT" Type="nvarchar" MaxLength="40" />
+          <Property Name="TEXT" Type="nvarchar" MaxLength="50" />
+          <Property Name="SCHEDULE3" Type="nvarchar" MaxLength="50" />
+          <Property Name="SCHEDULE4" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_MARINE_SPECIES_MARINE_CLASS">
           <End Role="MARINE_CLASS" Type="Self.MARINE_CLASS" Multiplicity="1" />
@@ -50,6 +54,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MARINE_SPECIES_MARINE_FAMILY">
+          <End Role="MARINE_FAMILY" Type="Self.MARINE_FAMILY" Multiplicity="0..1" />
+          <End Role="MARINE_SPECIES" Type="Self.MARINE_SPECIES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MARINE_FAMILY">
+              <PropertyRef Name="ID_PK" />
+            </Principal>
+            <Dependent Role="MARINE_SPECIES">
+              <PropertyRef Name="FAMILY_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="FIABModelStoreContainer">
           <EntitySet Name="MARINE_CLASS" EntityType="Self.MARINE_CLASS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MARINE_FAMILY" EntityType="Self.MARINE_FAMILY" Schema="dbo" store:Type="Tables" />
@@ -57,6 +73,10 @@
           <EntitySet Name="MARINE_TYPE" EntityType="Self.MARINE_TYPE" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_MARINE_SPECIES_MARINE_CLASS" Association="Self.FK_MARINE_SPECIES_MARINE_CLASS">
             <End Role="MARINE_CLASS" EntitySet="MARINE_CLASS" />
+            <End Role="MARINE_SPECIES" EntitySet="MARINE_SPECIES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MARINE_SPECIES_MARINE_FAMILY" Association="Self.FK_MARINE_SPECIES_MARINE_FAMILY">
+            <End Role="MARINE_FAMILY" EntitySet="MARINE_FAMILY" />
             <End Role="MARINE_SPECIES" EntitySet="MARINE_SPECIES" />
           </AssociationSet>
         </EntityContainer>
@@ -69,14 +89,18 @@
             <PropertyRef Name="ID_PK" />
           </Key>
           <Property Name="ID_PK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TEXT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TEXT" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SCHEDULE3" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MARINE_SPECIES" Relationship="FIABModel.FK_MARINE_SPECIES_MARINE_FAMILY" FromRole="MARINE_FAMILY" ToRole="MARINE_SPECIES" />
         </EntityType>
         <EntityType Name="MARINE_TYPE">
           <Key>
             <PropertyRef Name="ID_PK" />
           </Key>
           <Property Name="ID_PK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TEXT" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="TEXT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SCHEDULE3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SCHEDULE4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityContainer Name="FIABEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="MARINE_FAMILY" EntityType="Self.MARINE_FAMILY" />
@@ -85,6 +109,10 @@
           <EntitySet Name="MARINE_SPECIES" EntityType="FIABModel.MARINE_SPECIES" />
           <AssociationSet Name="FK_MARINE_SPECIES_MARINE_CLASS" Association="FIABModel.FK_MARINE_SPECIES_MARINE_CLASS">
             <End Role="MARINE_CLASS" EntitySet="MARINE_CLASS" />
+            <End Role="MARINE_SPECIES" EntitySet="MARINE_SPECIES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MARINE_SPECIES_MARINE_FAMILY" Association="FIABModel.FK_MARINE_SPECIES_MARINE_FAMILY">
+            <End Role="MARINE_FAMILY" EntitySet="MARINE_FAMILY" />
             <End Role="MARINE_SPECIES" EntitySet="MARINE_SPECIES" />
           </AssociationSet>
         </EntityContainer>
@@ -105,9 +133,11 @@
           <Property Name="CLASS_FK" Type="Int32" Nullable="false" />
           <Property Name="SPECIES_FK" Type="Int32" Nullable="false" />
           <Property Name="SCIENTIFIC" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="COMMON" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="COMMON" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
           <Property Name="TEXT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="MARINE_CLASS" Relationship="FIABModel.FK_MARINE_SPECIES_MARINE_CLASS" FromRole="MARINE_SPECIES" ToRole="MARINE_CLASS" />
+          <Property Name="FAMILY_FK" Type="Int32" />
+          <NavigationProperty Name="MARINE_FAMILY" Relationship="FIABModel.FK_MARINE_SPECIES_MARINE_FAMILY" FromRole="MARINE_SPECIES" ToRole="MARINE_FAMILY" />
         </EntityType>
         <Association Name="FK_MARINE_SPECIES_MARINE_CLASS">
           <End Type="FIABModel.MARINE_CLASS" Role="MARINE_CLASS" Multiplicity="1" />
@@ -121,6 +151,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MARINE_SPECIES_MARINE_FAMILY">
+          <End Type="FIABModel.MARINE_FAMILY" Role="MARINE_FAMILY" Multiplicity="0..1" />
+          <End Type="FIABModel.MARINE_SPECIES" Role="MARINE_SPECIES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MARINE_FAMILY">
+              <PropertyRef Name="ID_PK" />
+            </Principal>
+            <Dependent Role="MARINE_SPECIES">
+              <PropertyRef Name="FAMILY_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -130,6 +172,7 @@
           <EntitySetMapping Name="MARINE_FAMILY">
             <EntityTypeMapping TypeName="FIABModel.MARINE_FAMILY">
               <MappingFragment StoreEntitySet="MARINE_FAMILY">
+                <ScalarProperty Name="SCHEDULE3" ColumnName="SCHEDULE3" />
                 <ScalarProperty Name="ID_PK" ColumnName="ID_PK" />
                 <ScalarProperty Name="TEXT" ColumnName="TEXT" />
               </MappingFragment>
@@ -138,6 +181,8 @@
           <EntitySetMapping Name="MARINE_TYPE">
             <EntityTypeMapping TypeName="FIABModel.MARINE_TYPE">
               <MappingFragment StoreEntitySet="MARINE_TYPE">
+                <ScalarProperty Name="SCHEDULE4" ColumnName="SCHEDULE4" />
+                <ScalarProperty Name="SCHEDULE3" ColumnName="SCHEDULE3" />
                 <ScalarProperty Name="ID_PK" ColumnName="ID_PK" />
                 <ScalarProperty Name="TEXT" ColumnName="TEXT" />
               </MappingFragment>
@@ -155,6 +200,7 @@
           <EntitySetMapping Name="MARINE_SPECIES">
             <EntityTypeMapping TypeName="FIABModel.MARINE_SPECIES">
               <MappingFragment StoreEntitySet="MARINE_SPECIES">
+                <ScalarProperty Name="FAMILY_FK" ColumnName="FAMILY_FK" />
                 <ScalarProperty Name="TEXT" ColumnName="TEXT" />
                 <ScalarProperty Name="COMMON" ColumnName="COMMON" />
                 <ScalarProperty Name="SCIENTIFIC" ColumnName="SCIENTIFIC" />

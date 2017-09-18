@@ -220,6 +220,12 @@ namespace ExtractPDFApprovedSpecies
                 )              
             */
 
+
+            /*
+             * For Hard Coral, [Acanthastrea lordhowensis] is repeated twice in the document
+             * 
+             */
+
             command = new SqlCommand();
             command.CommandText = "SELECT ID_PK FROM [MARINE_SPECIES] WHERE [SCIENTIFIC] = @SCIENTIFIC_TEXT";
             command.Parameters.AddWithValue("@SCIENTIFIC_TEXT", scientific);

@@ -16,5 +16,7 @@ namespace DSED06_Aquatic_Pet_Store.Models
     {
         public int ID_PK { get; set; }
         public string TEXT { get; set; }
+        public string SCHEDULE3 { get; set; }
+        public string SCHEDULE4 { get; set; }
     }
 }

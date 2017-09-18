@@ -16,14 +16,15 @@ namespace DSED06_Aquatic_Pet_Store
         private FIABEntities db = new FIABEntities();
 
         // GET: MARINE_SPECIES
-        //public async Task<ActionResult> Index()
-        public ViewResult Index()
+        public async Task<ActionResult> Index()
+        //public ViewResult Index()
         {
-            //var mARINE_SPECIES = db.MARINE_SPECIES.Include(m => m.MARINE_CLASS);
-            var marineClass = new SelectList(db.MARINE_SPECIES.Select(r => r.MARINE_CLASS.SCHEDULE4).Distinct().ToList());
-            ViewBag.MarineClass = marineClass;
-            return View();
-            //return View(await mARINE_SPECIES.ToListAsync());
+            
+            //var marineClass = new SelectList(db.MARINE_SPECIES.Select(r => r.MARINE_CLASS.SCHEDULE4).Distinct().ToList());
+            //ViewBag.MarineClass = marineClass;
+            //return View();
+            var mARINE_SPECIES = db.MARINE_SPECIES.Include(m => m.MARINE_CLASS);
+            return View(await mARINE_SPECIES.ToListAsync());
         }
 
         // GET: MARINE_SPECIES/Details/5
