@@ -215,9 +215,11 @@ namespace ExtractPDFApprovedSpecies
                     [SCIENTIFIC] NVARCHAR (40) NOT NULL,
                     [COMMON]     NVARCHAR (80) NULL,
                     [TEXT]       NVARCHAR (50) NULL,
+                    [FAMILY_FK]  INT           NULL,
                     CONSTRAINT [PK_MARINE_SPECIES] PRIMARY KEY CLUSTERED ([ID_PK] ASC),
-                    CONSTRAINT [FK_MARINE_SPECIES_MARINE_CLASS] FOREIGN KEY ([CLASS_FK]) REFERENCES [dbo].[MARINE_CLASS] ([ID_PK])
-                )              
+                    CONSTRAINT [FK_MARINE_SPECIES_MARINE_CLASS] FOREIGN KEY ([CLASS_FK]) REFERENCES [dbo].[MARINE_CLASS] ([ID_PK]),
+                    CONSTRAINT [FK_MARINE_SPECIES_MARINE_FAMILY] FOREIGN KEY ([FAMILY_FK]) REFERENCES [dbo].[MARINE_FAMILY] ([ID_PK])
+                );
             */
 
 
