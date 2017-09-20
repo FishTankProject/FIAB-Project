@@ -42,7 +42,20 @@ namespace ExtractExcelNetto
                     line.Append(text + "|");
                 }
 
-                Console.Write($"[{(row).ToString().PadLeft(3, '0')}]{line}");
+                string[] str = line.ToString().Split('|');
+                string scientific_name;
+                if (str[2].Trim() != string.Empty)
+                {
+                    string[] split_text = str[2].Split(' ');
+                    scientific_name = split_text[0] + (split_text.Length > 1 ? " " + split_text[1] : "");
+                }
+                else
+                {
+                    scientific_name = str[2].Trim();
+                }
+
+
+                Console.Write($"[{(row).ToString().PadLeft(3, '0')}]{scientific_name}");
 
                 Console.Write("\n");
 
