@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtractExcelNetto", "ExtractExcelNetto\ExtractExcelNetto.csproj", "{0C11428F-956E-4606-A396-EB131F9ECA62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtractExcel.LIB", "ExtractExcel.LIB\ExtractExcel.LIB.csproj", "{4EE74604-A21B-48C6-B1B0-002D5587B4C5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0C11428F-956E-4606-A396-EB131F9ECA62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C11428F-956E-4606-A396-EB131F9ECA62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C11428F-956E-4606-A396-EB131F9ECA62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C11428F-956E-4606-A396-EB131F9ECA62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EE74604-A21B-48C6-B1B0-002D5587B4C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EE74604-A21B-48C6-B1B0-002D5587B4C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EE74604-A21B-48C6-B1B0-002D5587B4C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EE74604-A21B-48C6-B1B0-002D5587B4C5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {57B3D2E3-4298-4EED-842A-AC4888032003}
+	EndGlobalSection
+EndGlobal

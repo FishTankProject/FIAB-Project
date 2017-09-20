@@ -262,3 +262,5 @@ __pycache__/
 
 # ignore upload excel file
 orderlist1.xlsx
+/EDI/ExtractExcelATS/v0.1/ExtractExcelATS/ExtractExcelATS/Excel/ATS Cultured Price List 2016-1.xls
+/EDI/ExtractExcelNetto/v0.1/ExtractExcelNetto/ExtractExcelNetto/Excel/stocklist_netto-3.xlsx
