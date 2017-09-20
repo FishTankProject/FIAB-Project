@@ -1,0 +1,321 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FIABModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="MARINE_CLASS">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TEXT" Type="nvarchar" MaxLength="40" />
+          <Property Name="SCHEDULE4" Type="nvarchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="MARINE_CLIMATE">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TEXT" Type="nvarchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MARINE_FAMILY">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TEXT" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="SCHEDULE3" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="FLAG" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MARINE_SPECIES">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CLASS_FK" Type="int" Nullable="false" />
+          <Property Name="SPECIES_FK" Type="int" Nullable="false" />
+          <Property Name="SCIENTIFIC" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="COMMON" Type="nvarchar" MaxLength="80" />
+          <Property Name="TEXT" Type="nvarchar" MaxLength="50" />
+          <Property Name="FAMILY_FK" Type="int" />
+        </EntityType>
+        <EntityType Name="MARINE_TYPE">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TEXT" Type="nvarchar" MaxLength="50" />
+          <Property Name="SCHEDULE3" Type="nvarchar" MaxLength="50" />
+          <Property Name="SCHEDULE4" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MPI_SRFIRO">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TEXT_ID" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="TEXT" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MPI_SRFIRO_DETAIL">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SRFIRO_FK" Type="int" Nullable="false" />
+          <Property Name="TEXT_ID" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="TEXT" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_MARINE_SPECIES_MARINE_CLASS">
+          <End Role="MARINE_CLASS" Type="Self.MARINE_CLASS" Multiplicity="1" />
+          <End Role="MARINE_SPECIES" Type="Self.MARINE_SPECIES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MARINE_CLASS">
+              <PropertyRef Name="ID_PK" />
+            </Principal>
+            <Dependent Role="MARINE_SPECIES">
+              <PropertyRef Name="CLASS_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MARINE_SPECIES_MARINE_FAMILY">
+          <End Role="MARINE_FAMILY" Type="Self.MARINE_FAMILY" Multiplicity="0..1" />
+          <End Role="MARINE_SPECIES" Type="Self.MARINE_SPECIES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MARINE_FAMILY">
+              <PropertyRef Name="ID_PK" />
+            </Principal>
+            <Dependent Role="MARINE_SPECIES">
+              <PropertyRef Name="FAMILY_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FIABModelStoreContainer">
+          <EntitySet Name="MARINE_CLASS" EntityType="Self.MARINE_CLASS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MARINE_CLIMATE" EntityType="Self.MARINE_CLIMATE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MARINE_FAMILY" EntityType="Self.MARINE_FAMILY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MARINE_SPECIES" EntityType="Self.MARINE_SPECIES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MARINE_TYPE" EntityType="Self.MARINE_TYPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MPI_SRFIRO" EntityType="Self.MPI_SRFIRO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MPI_SRFIRO_DETAIL" EntityType="Self.MPI_SRFIRO_DETAIL" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_MARINE_SPECIES_MARINE_CLASS" Association="Self.FK_MARINE_SPECIES_MARINE_CLASS">
+            <End Role="MARINE_CLASS" EntitySet="MARINE_CLASS" />
+            <End Role="MARINE_SPECIES" EntitySet="MARINE_SPECIES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MARINE_SPECIES_MARINE_FAMILY" Association="Self.FK_MARINE_SPECIES_MARINE_FAMILY">
+            <End Role="MARINE_FAMILY" EntitySet="MARINE_FAMILY" />
+            <End Role="MARINE_SPECIES" EntitySet="MARINE_SPECIES" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FIABModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="MARINE_CLASS">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TEXT" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="SCHEDULE4" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MARINE_SPECIES" Relationship="Self.FK_MARINE_SPECIES_MARINE_CLASS" FromRole="MARINE_CLASS" ToRole="MARINE_SPECIES" />
+        </EntityType>
+        <EntityType Name="MARINE_CLIMATE">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TEXT" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MARINE_FAMILY">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TEXT" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SCHEDULE3" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FLAG" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="MARINE_SPECIES" Relationship="Self.FK_MARINE_SPECIES_MARINE_FAMILY" FromRole="MARINE_FAMILY" ToRole="MARINE_SPECIES" />
+        </EntityType>
+        <EntityType Name="MARINE_SPECIES">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CLASS_FK" Type="Int32" Nullable="false" />
+          <Property Name="SPECIES_FK" Type="Int32" Nullable="false" />
+          <Property Name="SCIENTIFIC" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="COMMON" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="TEXT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FAMILY_FK" Type="Int32" />
+          <NavigationProperty Name="MARINE_CLASS" Relationship="Self.FK_MARINE_SPECIES_MARINE_CLASS" FromRole="MARINE_SPECIES" ToRole="MARINE_CLASS" />
+          <NavigationProperty Name="MARINE_FAMILY" Relationship="Self.FK_MARINE_SPECIES_MARINE_FAMILY" FromRole="MARINE_SPECIES" ToRole="MARINE_FAMILY" />
+        </EntityType>
+        <EntityType Name="MARINE_TYPE">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TEXT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SCHEDULE3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SCHEDULE4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="MPI_SRFIRO">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TEXT_ID" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TEXT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MPI_SRFIRO_DETAIL">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SRFIRO_FK" Type="Int32" Nullable="false" />
+          <Property Name="TEXT_ID" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TEXT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_MARINE_SPECIES_MARINE_CLASS">
+          <End Role="MARINE_CLASS" Type="Self.MARINE_CLASS" Multiplicity="1" />
+          <End Role="MARINE_SPECIES" Type="Self.MARINE_SPECIES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MARINE_CLASS">
+              <PropertyRef Name="ID_PK" />
+            </Principal>
+            <Dependent Role="MARINE_SPECIES">
+              <PropertyRef Name="CLASS_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MARINE_SPECIES_MARINE_FAMILY">
+          <End Role="MARINE_FAMILY" Type="Self.MARINE_FAMILY" Multiplicity="0..1" />
+          <End Role="MARINE_SPECIES" Type="Self.MARINE_SPECIES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MARINE_FAMILY">
+              <PropertyRef Name="ID_PK" />
+            </Principal>
+            <Dependent Role="MARINE_SPECIES">
+              <PropertyRef Name="FAMILY_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FIABEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MARINE_CLASS" EntityType="Self.MARINE_CLASS" />
+          <EntitySet Name="MARINE_CLIMATE" EntityType="Self.MARINE_CLIMATE" />
+          <EntitySet Name="MARINE_FAMILY" EntityType="Self.MARINE_FAMILY" />
+          <EntitySet Name="MARINE_SPECIES" EntityType="Self.MARINE_SPECIES" />
+          <EntitySet Name="MARINE_TYPE" EntityType="Self.MARINE_TYPE" />
+          <EntitySet Name="MPI_SRFIRO" EntityType="Self.MPI_SRFIRO" />
+          <EntitySet Name="MPI_SRFIRO_DETAIL" EntityType="Self.MPI_SRFIRO_DETAIL" />
+          <AssociationSet Name="FK_MARINE_SPECIES_MARINE_CLASS" Association="Self.FK_MARINE_SPECIES_MARINE_CLASS">
+            <End Role="MARINE_CLASS" EntitySet="MARINE_CLASS" />
+            <End Role="MARINE_SPECIES" EntitySet="MARINE_SPECIES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MARINE_SPECIES_MARINE_FAMILY" Association="Self.FK_MARINE_SPECIES_MARINE_FAMILY">
+            <End Role="MARINE_FAMILY" EntitySet="MARINE_FAMILY" />
+            <End Role="MARINE_SPECIES" EntitySet="MARINE_SPECIES" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FIABModelStoreContainer" CdmEntityContainer="FIABEntities">
+          <EntitySetMapping Name="MARINE_CLASS">
+            <EntityTypeMapping TypeName="FIABModel.MARINE_CLASS">
+              <MappingFragment StoreEntitySet="MARINE_CLASS">
+                <ScalarProperty Name="ID_PK" ColumnName="ID_PK" />
+                <ScalarProperty Name="TEXT" ColumnName="TEXT" />
+                <ScalarProperty Name="SCHEDULE4" ColumnName="SCHEDULE4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MARINE_CLIMATE">
+            <EntityTypeMapping TypeName="FIABModel.MARINE_CLIMATE">
+              <MappingFragment StoreEntitySet="MARINE_CLIMATE">
+                <ScalarProperty Name="ID_PK" ColumnName="ID_PK" />
+                <ScalarProperty Name="TEXT" ColumnName="TEXT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MARINE_FAMILY">
+            <EntityTypeMapping TypeName="FIABModel.MARINE_FAMILY">
+              <MappingFragment StoreEntitySet="MARINE_FAMILY">
+                <ScalarProperty Name="ID_PK" ColumnName="ID_PK" />
+                <ScalarProperty Name="TEXT" ColumnName="TEXT" />
+                <ScalarProperty Name="SCHEDULE3" ColumnName="SCHEDULE3" />
+                <ScalarProperty Name="FLAG" ColumnName="FLAG" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MARINE_SPECIES">
+            <EntityTypeMapping TypeName="FIABModel.MARINE_SPECIES">
+              <MappingFragment StoreEntitySet="MARINE_SPECIES">
+                <ScalarProperty Name="ID_PK" ColumnName="ID_PK" />
+                <ScalarProperty Name="CLASS_FK" ColumnName="CLASS_FK" />
+                <ScalarProperty Name="SPECIES_FK" ColumnName="SPECIES_FK" />
+                <ScalarProperty Name="SCIENTIFIC" ColumnName="SCIENTIFIC" />
+                <ScalarProperty Name="COMMON" ColumnName="COMMON" />
+                <ScalarProperty Name="TEXT" ColumnName="TEXT" />
+                <ScalarProperty Name="FAMILY_FK" ColumnName="FAMILY_FK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MARINE_TYPE">
+            <EntityTypeMapping TypeName="FIABModel.MARINE_TYPE">
+              <MappingFragment StoreEntitySet="MARINE_TYPE">
+                <ScalarProperty Name="ID_PK" ColumnName="ID_PK" />
+                <ScalarProperty Name="TEXT" ColumnName="TEXT" />
+                <ScalarProperty Name="SCHEDULE3" ColumnName="SCHEDULE3" />
+                <ScalarProperty Name="SCHEDULE4" ColumnName="SCHEDULE4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MPI_SRFIRO">
+            <EntityTypeMapping TypeName="FIABModel.MPI_SRFIRO">
+              <MappingFragment StoreEntitySet="MPI_SRFIRO">
+                <ScalarProperty Name="ID_PK" ColumnName="ID_PK" />
+                <ScalarProperty Name="TEXT_ID" ColumnName="TEXT_ID" />
+                <ScalarProperty Name="TEXT" ColumnName="TEXT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MPI_SRFIRO_DETAIL">
+            <EntityTypeMapping TypeName="FIABModel.MPI_SRFIRO_DETAIL">
+              <MappingFragment StoreEntitySet="MPI_SRFIRO_DETAIL">
+                <ScalarProperty Name="ID_PK" ColumnName="ID_PK" />
+                <ScalarProperty Name="SRFIRO_FK" ColumnName="SRFIRO_FK" />
+                <ScalarProperty Name="TEXT_ID" ColumnName="TEXT_ID" />
+                <ScalarProperty Name="TEXT" ColumnName="TEXT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="262337bbfea84308aeeb7705545cc564" Name="Diagram1">
+        <EntityTypeShape EntityType="AQUATIC_PET_STOREModel.PET_GROUP" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AQUATIC_PET_STOREModel.PET_INFO" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AQUATIC_PET_STOREModel.PET_RECORD" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="AQUATIC_PET_STOREModel.PET_SIZE" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AQUATIC_PET_STOREModel.RECORD_PACKING" Width="1.5" PointX="7.5" PointY="1.375" IsExpanded="true" />
+        <AssociationConnector Association="AQUATIC_PET_STOREModel.FK_PET_INFO_PET_GROUP" ManuallyRouted="false" />
+        <AssociationConnector Association="AQUATIC_PET_STOREModel.FK_PET_RECORD_PET_INFO" ManuallyRouted="false" />
+        <AssociationConnector Association="AQUATIC_PET_STOREModel.FK_PET_RECORD_PET_SIZE" ManuallyRouted="false" />
+        <AssociationConnector Association="AQUATIC_PET_STOREModel.FK_RECORD_PACKING_PET_RECORD" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

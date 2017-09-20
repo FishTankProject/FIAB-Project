@@ -1,0 +1,61 @@
+﻿@model IEnumerable<FishInABox.Models.RECORD_PACKING>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Record Packing</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<form asp-controller="RECORD_PACKING" asp-action="Index" method="get">
+
+    <div>
+        @Html.Label("Bag Search - Leave this empty before searching to search entire table")
+    </div>
+
+    <p>
+        Search: <input type="text" name="searchString"> <br />
+    </p>
+    <p>
+        <input type="submit" value="Search" /> <br />
+    </p>
+</form>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BAG)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BOX)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PET_RECORD.CODE)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BAG)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BOX)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PET_RECORD.CODE)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.RECORD_FK }) |
+                @Html.ActionLink("Details", "Details", new { id = item.RECORD_FK }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.RECORD_FK })
+            </td>
+        </tr>
+    }
+
+</table>

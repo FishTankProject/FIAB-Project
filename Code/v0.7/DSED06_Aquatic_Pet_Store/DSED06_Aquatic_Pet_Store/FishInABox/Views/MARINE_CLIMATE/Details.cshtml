@@ -1,0 +1,26 @@
+﻿@model FishInABox.Models.MARINE_CLIMATE
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MARINE_CLIMATE</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TEXT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TEXT)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_PK }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AQUATIC_PET_STOREModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="PET_GROUP">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PET_INFO">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GROUP_FK" Type="int" Nullable="false" />
+          <Property Name="COMMON" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="SCIENTIFIC" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PET_RECORD">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PET_FK" Type="int" Nullable="false" />
+          <Property Name="SIZE_FK" Type="int" />
+          <Property Name="CODE" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PET_SIZE">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RECORD_PACKING">
+          <Key>
+            <PropertyRef Name="RECORD_FK" />
+          </Key>
+          <Property Name="RECORD_FK" Type="int" Nullable="false" />
+          <Property Name="BAG" Type="int" Nullable="false" />
+          <Property Name="BOX" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_PET_INFO_PET_GROUP">
+          <End Role="PET_GROUP" Type="Self.PET_GROUP" Multiplicity="1" />
+          <End Role="PET_INFO" Type="Self.PET_INFO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PET_GROUP">
+              <PropertyRef Name="ID_PK" />
+            </Principal>
+            <Dependent Role="PET_INFO">
+              <PropertyRef Name="GROUP_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PET_RECORD_PET_INFO">
+          <End Role="PET_INFO" Type="Self.PET_INFO" Multiplicity="1" />
+          <End Role="PET_RECORD" Type="Self.PET_RECORD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PET_INFO">
+              <PropertyRef Name="ID_PK" />
+            </Principal>
+            <Dependent Role="PET_RECORD">
+              <PropertyRef Name="PET_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PET_RECORD_PET_SIZE">
+          <End Role="PET_SIZE" Type="Self.PET_SIZE" Multiplicity="0..1" />
+          <End Role="PET_RECORD" Type="Self.PET_RECORD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PET_SIZE">
+              <PropertyRef Name="ID_PK" />
+            </Principal>
+            <Dependent Role="PET_RECORD">
+              <PropertyRef Name="SIZE_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RECORD_PACKING_PET_RECORD">
+          <End Role="PET_RECORD" Type="Self.PET_RECORD" Multiplicity="1" />
+          <End Role="RECORD_PACKING" Type="Self.RECORD_PACKING" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PET_RECORD">
+              <PropertyRef Name="ID_PK" />
+            </Principal>
+            <Dependent Role="RECORD_PACKING">
+              <PropertyRef Name="RECORD_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AQUATIC_PET_STOREModelStoreContainer">
+          <EntitySet Name="PET_GROUP" EntityType="Self.PET_GROUP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PET_INFO" EntityType="Self.PET_INFO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PET_RECORD" EntityType="Self.PET_RECORD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PET_SIZE" EntityType="Self.PET_SIZE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RECORD_PACKING" EntityType="Self.RECORD_PACKING" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_PET_INFO_PET_GROUP" Association="Self.FK_PET_INFO_PET_GROUP">
+            <End Role="PET_GROUP" EntitySet="PET_GROUP" />
+            <End Role="PET_INFO" EntitySet="PET_INFO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PET_RECORD_PET_INFO" Association="Self.FK_PET_RECORD_PET_INFO">
+            <End Role="PET_INFO" EntitySet="PET_INFO" />
+            <End Role="PET_RECORD" EntitySet="PET_RECORD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PET_RECORD_PET_SIZE" Association="Self.FK_PET_RECORD_PET_SIZE">
+            <End Role="PET_SIZE" EntitySet="PET_SIZE" />
+            <End Role="PET_RECORD" EntitySet="PET_RECORD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RECORD_PACKING_PET_RECORD" Association="Self.FK_RECORD_PACKING_PET_RECORD">
+            <End Role="PET_RECORD" EntitySet="PET_RECORD" />
+            <End Role="RECORD_PACKING" EntitySet="RECORD_PACKING" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AQUATIC_PET_STOREModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="PET_GROUP">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PET_INFO" Relationship="Self.FK_PET_INFO_PET_GROUP" FromRole="PET_GROUP" ToRole="PET_INFO" />
+        </EntityType>
+        <EntityType Name="PET_INFO">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GROUP_FK" Type="Int32" Nullable="false" />
+          <Property Name="COMMON" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SCIENTIFIC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PET_GROUP" Relationship="Self.FK_PET_INFO_PET_GROUP" FromRole="PET_INFO" ToRole="PET_GROUP" />
+          <NavigationProperty Name="PET_RECORD" Relationship="Self.FK_PET_RECORD_PET_INFO" FromRole="PET_INFO" ToRole="PET_RECORD" />
+        </EntityType>
+        <EntityType Name="PET_RECORD">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PET_FK" Type="Int32" Nullable="false" />
+          <Property Name="SIZE_FK" Type="Int32" />
+          <Property Name="CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PET_INFO" Relationship="Self.FK_PET_RECORD_PET_INFO" FromRole="PET_RECORD" ToRole="PET_INFO" />
+          <NavigationProperty Name="PET_SIZE" Relationship="Self.FK_PET_RECORD_PET_SIZE" FromRole="PET_RECORD" ToRole="PET_SIZE" />
+          <NavigationProperty Name="RECORD_PACKING" Relationship="Self.FK_RECORD_PACKING_PET_RECORD" FromRole="PET_RECORD" ToRole="RECORD_PACKING" />
+        </EntityType>
+        <EntityType Name="PET_SIZE">
+          <Key>
+            <PropertyRef Name="ID_PK" />
+          </Key>
+          <Property Name="ID_PK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PET_RECORD" Relationship="Self.FK_PET_RECORD_PET_SIZE" FromRole="PET_SIZE" ToRole="PET_RECORD" />
+        </EntityType>
+        <EntityType Name="RECORD_PACKING">
+          <Key>
+            <PropertyRef Name="RECORD_FK" />
+          </Key>
+          <Property Name="RECORD_FK" Type="Int32" Nullable="false" />
+          <Property Name="BAG" Type="Int32" Nullable="false" />
+          <Property Name="BOX" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PET_RECORD" Relationship="Self.FK_RECORD_PACKING_PET_RECORD" FromRole="RECORD_PACKING" ToRole="PET_RECORD" />
+        </EntityType>
+        <Association Name="FK_PET_INFO_PET_GROUP">
+          <End Role="PET_GROUP" Type="Self.PET_GROUP" Multiplicity="1" />
+          <End Role="PET_INFO" Type="Self.PET_INFO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PET_GROUP">
+              <PropertyRef Name="ID_PK" />
+            </Principal>
+            <Dependent Role="PET_INFO">
+              <PropertyRef Name="GROUP_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PET_RECORD_PET_INFO">
+          <End Role="PET_INFO" Type="Self.PET_INFO" Multiplicity="1" />
+          <End Role="PET_RECORD" Type="Self.PET_RECORD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PET_INFO">
+              <PropertyRef Name="ID_PK" />
+            </Principal>
+            <Dependent Role="PET_RECORD">
+              <PropertyRef Name="PET_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PET_RECORD_PET_SIZE">
+          <End Role="PET_SIZE" Type="Self.PET_SIZE" Multiplicity="0..1" />
+          <End Role="PET_RECORD" Type="Self.PET_RECORD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PET_SIZE">
+              <PropertyRef Name="ID_PK" />
+            </Principal>
+            <Dependent Role="PET_RECORD">
+              <PropertyRef Name="SIZE_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RECORD_PACKING_PET_RECORD">
+          <End Role="PET_RECORD" Type="Self.PET_RECORD" Multiplicity="1" />
+          <End Role="RECORD_PACKING" Type="Self.RECORD_PACKING" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PET_RECORD">
+              <PropertyRef Name="ID_PK" />
+            </Principal>
+            <Dependent Role="RECORD_PACKING">
+              <PropertyRef Name="RECORD_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AQUATIC_PET_STOREEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="PET_GROUP" EntityType="Self.PET_GROUP" />
+          <EntitySet Name="PET_INFO" EntityType="Self.PET_INFO" />
+          <EntitySet Name="PET_RECORD" EntityType="Self.PET_RECORD" />
+          <EntitySet Name="PET_SIZE" EntityType="Self.PET_SIZE" />
+          <EntitySet Name="RECORD_PACKING" EntityType="Self.RECORD_PACKING" />
+          <AssociationSet Name="FK_PET_INFO_PET_GROUP" Association="Self.FK_PET_INFO_PET_GROUP">
+            <End Role="PET_GROUP" EntitySet="PET_GROUP" />
+            <End Role="PET_INFO" EntitySet="PET_INFO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PET_RECORD_PET_INFO" Association="Self.FK_PET_RECORD_PET_INFO">
+            <End Role="PET_INFO" EntitySet="PET_INFO" />
+            <End Role="PET_RECORD" EntitySet="PET_RECORD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PET_RECORD_PET_SIZE" Association="Self.FK_PET_RECORD_PET_SIZE">
+            <End Role="PET_SIZE" EntitySet="PET_SIZE" />
+            <End Role="PET_RECORD" EntitySet="PET_RECORD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RECORD_PACKING_PET_RECORD" Association="Self.FK_RECORD_PACKING_PET_RECORD">
+            <End Role="PET_RECORD" EntitySet="PET_RECORD" />
+            <End Role="RECORD_PACKING" EntitySet="RECORD_PACKING" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AQUATIC_PET_STOREModelStoreContainer" CdmEntityContainer="AQUATIC_PET_STOREEntities">
+          <EntitySetMapping Name="PET_GROUP">
+            <EntityTypeMapping TypeName="AQUATIC_PET_STOREModel.PET_GROUP">
+              <MappingFragment StoreEntitySet="PET_GROUP">
+                <ScalarProperty Name="ID_PK" ColumnName="ID_PK" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PET_INFO">
+            <EntityTypeMapping TypeName="AQUATIC_PET_STOREModel.PET_INFO">
+              <MappingFragment StoreEntitySet="PET_INFO">
+                <ScalarProperty Name="ID_PK" ColumnName="ID_PK" />
+                <ScalarProperty Name="GROUP_FK" ColumnName="GROUP_FK" />
+                <ScalarProperty Name="COMMON" ColumnName="COMMON" />
+                <ScalarProperty Name="SCIENTIFIC" ColumnName="SCIENTIFIC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PET_RECORD">
+            <EntityTypeMapping TypeName="AQUATIC_PET_STOREModel.PET_RECORD">
+              <MappingFragment StoreEntitySet="PET_RECORD">
+                <ScalarProperty Name="ID_PK" ColumnName="ID_PK" />
+                <ScalarProperty Name="PET_FK" ColumnName="PET_FK" />
+                <ScalarProperty Name="SIZE_FK" ColumnName="SIZE_FK" />
+                <ScalarProperty Name="CODE" ColumnName="CODE" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PET_SIZE">
+            <EntityTypeMapping TypeName="AQUATIC_PET_STOREModel.PET_SIZE">
+              <MappingFragment StoreEntitySet="PET_SIZE">
+                <ScalarProperty Name="ID_PK" ColumnName="ID_PK" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RECORD_PACKING">
+            <EntityTypeMapping TypeName="AQUATIC_PET_STOREModel.RECORD_PACKING">
+              <MappingFragment StoreEntitySet="RECORD_PACKING">
+                <ScalarProperty Name="RECORD_FK" ColumnName="RECORD_FK" />
+                <ScalarProperty Name="BAG" ColumnName="BAG" />
+                <ScalarProperty Name="BOX" ColumnName="BOX" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

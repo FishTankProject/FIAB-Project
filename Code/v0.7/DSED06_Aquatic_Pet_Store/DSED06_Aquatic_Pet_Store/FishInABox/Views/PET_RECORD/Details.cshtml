@@ -1,0 +1,58 @@
+﻿@model FishInABox.Models.PET_RECORD
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PET_RECORD</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CODE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CODE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DESCRIPTION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DESCRIPTION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PET_INFO.COMMON)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PET_INFO.COMMON)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PET_SIZE.DESCRIPTION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PET_SIZE.DESCRIPTION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RECORD_PACKING.RECORD_FK)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RECORD_PACKING.RECORD_FK)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_PK }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

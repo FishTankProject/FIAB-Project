@@ -1,0 +1,66 @@
+﻿@model FishInABox.Models.MARINE_SPECIES
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MARINE_SPECIES</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SPECIES_FK)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SPECIES_FK)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SCIENTIFIC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SCIENTIFIC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.COMMON)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.COMMON)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TEXT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TEXT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MARINE_CLASS.TEXT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MARINE_CLASS.TEXT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MARINE_FAMILY.TEXT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MARINE_FAMILY.TEXT)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_PK }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

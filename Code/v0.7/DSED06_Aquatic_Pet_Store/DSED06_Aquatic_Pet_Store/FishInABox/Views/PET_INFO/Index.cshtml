@@ -1,0 +1,61 @@
+﻿@model IEnumerable<FishInABox.Models.PET_INFO>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Pet Info</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<form asp-controller="PET_INFO" asp-action="Index" method="get">
+
+    <div>
+        @Html.Label("Common Search - Leave this empty before searching to search entire table")
+    </div>
+
+    <p>
+        Search: <input type="text" name="searchString"> <br />
+    </p>
+    <p>
+        <input type="submit" value="Search" /> <br />
+    </p>
+</form>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.COMMON)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SCIENTIFIC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PET_GROUP.NAME)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.COMMON)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SCIENTIFIC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PET_GROUP.NAME)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID_PK }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID_PK }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID_PK })
+            </td>
+        </tr>
+    }
+
+</table>

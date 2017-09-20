@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div class="jumbotron">
+    <h1>Database Access Application</h1>
+    <p class="lead">Application to search and manage the SQL Database.</p>
+    @*<p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Load Database Tables (Editable)</h2>
+        <p>
+            <ul><li>@Html.ActionLink("'Marine Class' Database", "Index", "MARINE_CLASS")</li></ul>
+            <ul><li>@Html.ActionLink("'Marine Climate' Database", "Index", "MARINE_CLIMATE")</li></ul>
+            <ul><li>@Html.ActionLink("'Marine Family' Database", "Index", "MARINE_FAMILY")</li></ul>
+            <ul><li>@Html.ActionLink("'Marine Species' Database", "Index", "MARINE_SPECIES")</li></ul>
+            <ul><li>@Html.ActionLink("'Marine Type' Database", "Index", "MARINE_TYPE")</li></ul>
+            <ul><li>@Html.ActionLink("'MPI Srfiro' Database", "Index", "MPI_SRFIRO")</li></ul>
+            <ul><li>@Html.ActionLink("'MPI Srfiro Detail' Database", "Index", "MPI_SRFIRO_DETAIL")</li></ul>
+        </p>
+        @*<p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>*@
+    </div>
+    <div class="col-md-4">
+        <h2>Load Fish Database View (Display Only)</h2>
+        <p>PUT VIEW LINK HERE WHEN AVAILABLE</p>
+        @*<p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>*@
+    </div>
+    @*<div class="col-md-4">
+            <h2>Web Hosting</h2>
+            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        </div>*@
+</div>
