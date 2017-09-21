@@ -19,8 +19,10 @@ namespace ExtractExcelNetto
         {
             StringBuilder line;
             string text;
+            int pad;
 
-            string[] ignored_words = { "Latin Name" };
+            string[] ignored_words = { "Scientific Name", "African fish:" };
+            string[] delimitors = { "/", "-" };
 
             for (int row = 1; row < rowCount; row++)
             {
@@ -46,6 +48,23 @@ namespace ExtractExcelNetto
                 string scientific_name;
                 if (str[2].Trim() != string.Empty)
                 {
+                    //string[] temp_text = str[2].Split('/');
+                    //string[] temp_text = str[2].Split(' ');
+                    //if (CheckForWord(str[2], delimitors) ==true)
+                    //{
+                    //    string temp = str[2].Trim();
+                    //    foreach (var ch in delimitors)
+                    //    {
+                    //        if(delimitors.Contains(ch))
+                    //        {
+                    //            temp_text = temp.Split(ch[0]);
+                    //            temp = temp.Replace(ch[0], ' ').Trim();
+                    //        }
+                    //    }
+                    //}
+
+                    //string[] split_text = temp_text[0].Split(' ');
+
                     string[] split_text = str[2].Split(' ');
                     scientific_name = split_text[0] + (split_text.Length > 1 ? " " + split_text[1] : "");
                 }
@@ -55,12 +74,38 @@ namespace ExtractExcelNetto
                 }
 
 
-                Console.Write($"[{(row).ToString().PadLeft(3, '0')}]{scientific_name}");
+                //pad = 100 - ((scientific_name != string.Empty) ? scientific_name.Length:0) - line.Length;
+                pad = 50 - line.Length;
+
+                if (scientific_name != string.Empty && CheckForWord(scientific_name.Trim(), ignored_words) != true)
+                {
+
+                    Console.Write($"[{(row).ToString().PadLeft(3, '0')}]{line}" + "".PadRight(pad,' '));
+
+                    //string scientific_name = split_text[0] + " " + split_text[1];
+                    int record_id = SpeciesDataHelper.GetIDByScientificName(scientific_name);
+                    if (record_id > 0)
+                    {
+
+                        Console.Write($"[S] {SpeciesDataHelper.GetScientificName(record_id)}");
+                    }
+                    else
+                    {
+                        Console.Write("\t\t* RECORD NOT FOUND !!! *");
+                    }
+
+                }
+                else
+                {
+                    Console.Write($"[{(row).ToString().PadLeft(3, '0')}]");
+                }
+
+                //Console.Write($"[{(row).ToString().PadLeft(3, '0')}]{scientific_name}");
 
                 Console.Write("\n");
 
                 // Debug purpose
-                if (row == 500) break;
+                if (row == 200) break;
             }
         }
     }
