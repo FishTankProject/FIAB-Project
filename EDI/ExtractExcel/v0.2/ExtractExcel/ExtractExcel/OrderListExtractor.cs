@@ -287,7 +287,7 @@ namespace ExtractExcel
                                 //Console.Write("\n" + "".PadRight("[{(row).ToString().PadLeft(3, '0')}]{line}".Length, ' ') +
                                 //    "".PadRight(pad, ' ') + $"[S] {GetScientificName(record_id)}");
                                 Console.Write($"\t[C] {GetCommonName(record_id)}");
-                                Console.Write(" [S] {GetScientificName(record_id)}");
+                                Console.Write($" [S] {GetScientificName(record_id)}");
                             }
                             else
                             {
@@ -326,7 +326,7 @@ namespace ExtractExcel
                 Console.Write("\n");
 
                 // Debug
-                if (row == 700) break;
+                if (row == 685) break;
             }
 
             Console.WriteLine();
